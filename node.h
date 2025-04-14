@@ -9,6 +9,8 @@ class Node {
 private:
     std::string m_Name; // each "building" has to have a unique name
 
+    //TODO: this should be made an object, where it has the amount connections there, so that when the list
+    //is requested from GetConnections(), it would include the amount of connections
     int m_AmountConnections = 0;
     Connection m_Connections[MAX_CONNECTIONS]; //arbitrary for now, array for easier sorting
 
