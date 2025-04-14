@@ -7,7 +7,7 @@ NodeList::NodeList(){
 void NodeList::Add(Node* newNode){
 }
 
-void NodeList::Remove(const int& nodeName){
+void NodeList::Remove(const std::string& nodeName){
 }
 
 void NodeList::Print(){
