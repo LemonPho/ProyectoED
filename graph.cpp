@@ -15,7 +15,7 @@ void Graph::RemoveNode(const std::string& nodeName){
 
 Node* Graph::GetNodeFromString(const std::string& nodeName) {
     Node* temp = m_Header;
-    while(temp != nullptr){
+    while(temp){
         if(temp->GetName() == nodeName) return temp;
         temp = temp->GetNext();
     }
@@ -35,7 +35,12 @@ void Graph::PrintGraph(){
 void Graph::PrintList(){
     Node* temp = m_Header;
 
-    while(temp != nullptr){
+    if(!temp){
+        std::cout << "No hay edificios registrados" << std::endl;
+        return;
+    }
+
+    while(temp){
         std::cout << temp->GetName() << std::endl;
         temp = temp->GetNext();
     }

@@ -35,7 +35,7 @@ void NodeMenu::Run() {
                 std::cout << "Ingresa el nombre del edificio destino: ";
                 std::getline(std::cin, destinationInput);
                 destinationNode = m_Graph->GetNodeFromString(destinationInput);
-                while(destinationNode == nullptr){
+                while(!destinationNode){
                     std::cout << "No se encontro un edificio con el nombre: " << destinationInput << ", intenta de nuevo: ";
                     std::getline(std::cin, destinationInput);
                     destinationNode = m_Graph->GetNodeFromString(destinationInput);

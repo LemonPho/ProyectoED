@@ -5,42 +5,30 @@ Core::Core() {
 }
 
 void Core::Run(){
-    int option;
     bool exit = false;
 
+    std::string buildingInput;
+    Node* selectedNode;
     do{
         system(CLEAR);
         std::cout << "Mapa CUCEI" << std::endl;
-        std::cout << "1. Ingresar Ubicacion" << std::endl;
-        std::cout << "2. Agregar Edificio" << std::endl;
-        std::cout << "3. Editar Edificio" << std::endl;
-        std::cout << "4. Eliminar Edificio" << std::endl;
-        std::cout << "5. Salir" << std::endl;
-        std::cout << "Opcion: ";
-        std::cin >> option;
-        switch(option){
-            case INPUT_LOCATION: {
-                std::string locationInput;
-                Node* selectedNode;
-
-                system(CLEAR);
-                std::cout << "Ingresa Ubicacion" << std::endl;
-                m_Graph->PrintList();
-                std::cout << "Ingresa el nombre del edificio en donde esta: ";
-                std::getline(std::cin, locationInput);
-                selectedNode = m_Graph->GetNodeFromString(locationInput);
-                while(selectedNode == nullptr){
-                    std::cout << "No se encontro un edificio con el nombre: " << locationInput << ", intenta de nuevo: ";
-                    std::getline(std::cin, locationInput);
-                    selectedNode = m_Graph->GetNodeFromString(locationInput);
-                }
-
-                NodeMenu nodeMenu(selectedNode, m_Graph);
-                nodeMenu.Run(); //Node menu
-                break;
+        m_Graph->PrintList();
+        std::cout << "Ingresa su ubicacion (0. menu de admin, 1. Salir): ";
+        std::getline(std::cin, buildingInput);
+        if(buildingInput == "0"){
+            //admin menu start here
+        } else if(buildingInput == "1"){
+            exit = true;
+        } else {
+            selectedNode = m_Graph->GetNodeFromString(buildingInput);
+            while(!selectedNode){
+                std::cout << "No se encontro el edificio buscado (" << buildingInput << "), intenta de nuevo: ";
+                std::getline(std::cin, buildingInput);
+                selectedNode = m_Graph->GetNodeFromString(buildingInput);
             }
-        }
 
+            NodeMenu nodeMenu = NodeMenu(selectedNode, m_Graph);
+        }
     } while(!exit);
 }
 
