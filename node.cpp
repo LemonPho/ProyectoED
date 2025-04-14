@@ -4,6 +4,10 @@ Node::Node() {
 
 }
 
+Node::Node(const std::string& name) {
+
+}
+
 Node::~Node() {
 
 }

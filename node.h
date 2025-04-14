@@ -6,12 +6,12 @@
 class Node {
 private:
     std::string m_Name; // each "building" has to have a unique name
-    Connection* m_Connection;
+    Connection m_Connections[5]; //arbitrary for now, array for easier sorting
     Node* m_Next;
     Node* m_Prev;
 public:
     Node();
-    Node(const std::string& name, Connection* connection, Node* next);
+    Node(const std::string& name);
     ~Node();
 
     void SetName(const std::string& name);
@@ -21,7 +21,7 @@ public:
     void SetPrev(Node* prev);
 
     const std::string& GetName();
-    Connection* GetConnection();
+    Connection GetConnections();
     Node* GetNext();
     Node* GetPrev();
 

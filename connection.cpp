@@ -9,10 +9,6 @@ Connection::Connection(Node* node, float distance) {
 
 }
 
-void Connection::SetConnection(Connection* connection) {
-
-}
-
 void Connection::SetNode(Node* node) {
 
 }
@@ -22,12 +18,11 @@ void Connection::SetDistance(float distance){
 }
 
 float Connection::GetDistance() {
+    return m_Distance;
 }
 
-Node * Connection::GetNode() {
-}
-
-Connection * Connection::GetConnection() {
+Node* Connection::GetNode() {
+    return m_Node;
 }
 
 Connection::~Connection() {
