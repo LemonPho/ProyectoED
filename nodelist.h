@@ -5,6 +5,7 @@
 
 class Node; //If we include node.h, node.h will include nodelist.h which will then include node.h, infinite.
 
+//consider changing name to graph
 class NodeList {
 private:
     Node* m_Header;
