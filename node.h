@@ -3,10 +3,12 @@
 #include <iostream>
 #include "connection.h"
 
+const int MAX_CONNECTIONS = 5;
+
 class Node {
 private:
     std::string m_Name; // each "building" has to have a unique name
-    Connection m_Connections[5]; //arbitrary for now, array for easier sorting
+    Connection m_Connections[MAX_CONNECTIONS]; //arbitrary for now, array for easier sorting
     Node* m_Next;
     Node* m_Prev;
 public:
@@ -26,6 +28,7 @@ public:
     Node* GetPrev();
 
     void Print();
+    void PrintConnections();
 
     Node& operator=(const Node& other);
     bool operator==(const Node& other) const;

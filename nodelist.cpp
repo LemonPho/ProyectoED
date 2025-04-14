@@ -4,13 +4,42 @@
 NodeList::NodeList(){
 }
 
-void NodeList::Add(Node* newNode){
+void NodeList::AddNode(Node* newNode){
 }
 
-void NodeList::Remove(const std::string& nodeName){
+void NodeList::EditNode(Node* node){
+
 }
 
-void NodeList::Print(){
+void NodeList::RemoveNode(const std::string& nodeName){
+}
+
+Node * NodeList::GetNodeFromString(const std::string& nodeName) {
+    Node* temp = m_Header;
+    while(temp != nullptr){
+        if(temp->GetName() == nodeName) return temp;
+        temp = temp->GetNext();
+    }
+
+    return nullptr;
+}
+
+Connection * NodeList::MakeShortestPath(Node* originNode, Node* destinationNode) {
+
+}
+
+
+
+void NodeList::PrintGraph(){
+}
+
+void NodeList::PrintList(){
+    Node* temp = m_Header;
+
+    while(temp != nullptr){
+        std::cout << temp->GetName() << std::endl;
+        temp = temp->GetNext();
+    }
 }
 
 NodeList::~NodeList(){

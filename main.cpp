@@ -1,10 +1,9 @@
 #include <iostream>
 
-#include "nodelist.h"
+#include "core.h"
 
 int main(int argc, char **argv) {
-    NodeList* graph;
-
-    std::cout << "Hello, world!" << std::endl;
+    Core core;
+    core.Run(); //start core
     return 0;
 }
