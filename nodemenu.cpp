@@ -4,7 +4,7 @@
 #include "nodemenu.h"
 #include "core.h"
 
-NodeMenu::NodeMenu(Node* node, NodeList* graph) {
+NodeMenu::NodeMenu(Node* node, Graph* graph) {
     m_Node = node;
     m_Graph = graph;
 }

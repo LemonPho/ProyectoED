@@ -6,11 +6,11 @@
 class Node; //If we include node.h, node.h will include nodelist.h which will then include node.h, infinite.
 
 //consider changing name to graph
-class NodeList {
+class Graph {
 private:
     Node* m_Header;
 public:
-    NodeList();
+    Graph();
 
     void AddNode(Node* newNode);
     void EditNode(Node* node);
@@ -24,5 +24,5 @@ public:
     void PrintGraph(); //show full graph with connections
     void PrintList(); //show just list of buildings
 
-    ~NodeList();
+    ~Graph();
 };

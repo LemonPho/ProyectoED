@@ -1,14 +1,14 @@
 #pragma once
 
-#include "nodelist.h"
+#include "graph.h"
 #include "node.h"
 
 class NodeMenu {
 private:
     Node* m_Node;
-    NodeList* m_Graph;
+    Graph* m_Graph;
 public:
-    NodeMenu(Node* node, NodeList* graph); //only allow node menu to be used with a node, its necessary
+    NodeMenu(Node* node, Graph* graph); //only allow node menu to be used with a node, its necessary
     ~NodeMenu() = default;
 
     void Run();

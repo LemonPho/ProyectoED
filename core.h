@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "nodelist.h"
+#include "graph.h"
 #include "nodemenu.h"
 
 #ifdef _WIN32
@@ -13,7 +13,7 @@
 
 class Core {
 private:
-    NodeList* m_Graph = new NodeList();
+    Graph* m_Graph = new Graph();
 public:
     Core();
     void Run();
