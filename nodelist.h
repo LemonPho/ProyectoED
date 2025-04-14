@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "connection.h"
+#include "node.h"
 
 class Node; //If we include node.h, node.h will include nodelist.h which will then include node.h, infinite.
 

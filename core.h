@@ -26,5 +26,5 @@ enum MainMenuOptions {
     ADD_NODE,
     EDIT_NODE,
     DELETE_NODE,
-    EXIT,
+    CORE_EXIT,
 };

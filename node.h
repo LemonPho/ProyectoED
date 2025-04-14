@@ -8,7 +8,10 @@ const int MAX_CONNECTIONS = 5;
 class Node {
 private:
     std::string m_Name; // each "building" has to have a unique name
+
+    int m_AmountConnections = 0;
     Connection m_Connections[MAX_CONNECTIONS]; //arbitrary for now, array for easier sorting
+
     Node* m_Next;
     Node* m_Prev;
 public:
@@ -23,7 +26,8 @@ public:
     void SetPrev(Node* prev);
 
     const std::string& GetName();
-    Connection GetConnections();
+    int GetAmountConnections();
+    Connection* GetConnections();
     Node* GetNext();
     Node* GetPrev();
 

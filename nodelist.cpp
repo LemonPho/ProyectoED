@@ -1,5 +1,4 @@
 #include "nodelist.h"
-#include "node.h" // here we include node
 
 NodeList::NodeList(){
 }
@@ -14,7 +13,7 @@ void NodeList::EditNode(Node* node){
 void NodeList::RemoveNode(const std::string& nodeName){
 }
 
-Node * NodeList::GetNodeFromString(const std::string& nodeName) {
+Node* NodeList::GetNodeFromString(const std::string& nodeName) {
     Node* temp = m_Header;
     while(temp != nullptr){
         if(temp->GetName() == nodeName) return temp;
