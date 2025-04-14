@@ -1,26 +1,31 @@
 #pragma once
 
 #include <iostream>
-#include "nodelist.h"
+#include "connection.h"
 
 class Node {
 private:
     std::string m_Name; // each "building" has to have a unique name
-    NodeList* m_Connections;
-    Node* next;
+    Connection* m_Connection;
+    Node* m_Next;
+    Node* m_Prev;
 public:
     Node();
-    Node(const std::string& name, NodeList* connections, Node* next);
+    Node(const std::string& name, Connection* connection, Node* next);
     ~Node();
 
     void SetName(const std::string& name);
     void InsertConnection(Node* newConnection);
     void DeleteConnection(const std::string& name);
     void SetNext(Node* next);
+    void SetPrev(Node* prev);
 
     const std::string& GetName();
-    NodeList* GetConnections();
+    Connection* GetConnection();
     Node* GetNext();
+    Node* GetPrev();
+
+    void Print();
 
     Node& operator=(const Node& other);
     bool operator==(const Node& other) const;
