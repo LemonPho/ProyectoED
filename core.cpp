@@ -1,7 +1,9 @@
 #include "core.h"
+#include "nodemenu.h"
+#include "graph.h"
 
 Core::Core() {
-
+    m_Graph = new Graph();
 }
 
 void Core::Run(){

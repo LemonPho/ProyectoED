@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
-#include "node.h"
+#include "connection-list.h"
 
-class Node; //If we include node.h, node.h will include nodelist.h which will then include node.h, infinite.
+class Node; //If we include node.h, node.h will include graph.h which will then include node.h, infinite.
 
 //consider changing name to graph
 class Graph {
@@ -12,17 +12,19 @@ private:
 public:
     Graph();
 
-    void AddNode(Node* newNode);
-    void EditNode(Node* node);
-    void RemoveNode(const std::string& nodeName);
+    void AddNode();
+    void EditNode();
+    void DeleteNode();
 
     Node* GetNodeFromString(const std::string& nodeName);
+    Node* GetNodeFromIndex(const int index);
 
     // makes an array of connections of the shortest path between two nodes
-    Connection* MakeShortestPath(Node* originNode, Node* destinationNode);
+    ConnectionList MakeShortestPath(Node* originNode, Node* destinationNode);
 
     void PrintGraph(); //show full graph with connections
     void PrintList(); //show just list of buildings
+    void PrintListIndex(); //print list with index
 
     ~Graph();
 };

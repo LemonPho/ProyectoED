@@ -2,18 +2,17 @@
 
 #include <iostream>
 
-#include "graph.h"
-#include "nodemenu.h"
-
 #ifdef _WIN32
 #define CLEAR "cls"
 #else
 #define CLEAR "clear"
 #endif
 
+#include "graph.h"
+
 class Core {
 private:
-    Graph* m_Graph = new Graph();
+    Graph* m_Graph;
 public:
     Core();
     void Run();

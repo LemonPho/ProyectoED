@@ -1,13 +1,11 @@
-// SPDX-FileCopyrightText: 2025 <copyright holder> <email>
-// SPDX-License-Identifier: Apache-2.0
-
 #include "nodemenu.h"
-#include "core.h"
+#include "connection-list.h"
 
 NodeMenu::NodeMenu(Node* node, Graph* graph) {
     m_Node = node;
     m_Graph = graph;
 }
+
 
 void NodeMenu::Run() {
     int option;
@@ -42,7 +40,7 @@ void NodeMenu::Run() {
                 }
 
                 // array of connections to save the path from origin node (m_Node) to destinationNode
-                Connection *path = m_Graph->MakeShortestPath(m_Node, destinationNode);
+                ConnectionList path = m_Graph->MakeShortestPath(m_Node, destinationNode);
                 break;
             }
         }

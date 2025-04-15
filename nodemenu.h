@@ -1,7 +1,8 @@
 #pragma once
 
-#include "graph.h"
+#include "core.h"
 #include "node.h"
+#include "graph.h"
 
 class NodeMenu {
 private:
