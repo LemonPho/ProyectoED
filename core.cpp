@@ -1,6 +1,7 @@
 #include "core.h"
 #include "nodemenu.h"
 #include "graph.h"
+#include "admin-menu.h"
 
 Core::Core() {
     m_Graph = new Graph();
@@ -18,7 +19,8 @@ void Core::Run(){
         std::cout << "Ingresa su ubicacion (0. menu de admin, 1. Salir): ";
         std::getline(std::cin, buildingInput);
         if(buildingInput == "0"){
-            //admin menu start here
+            AdminMenu adminMenu = AdminMenu(m_Graph);
+            adminMenu.Run();
         } else if(buildingInput == "1"){
             exit = true;
         } else {

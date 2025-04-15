@@ -1,4 +1,5 @@
 #include "connection-list.h"
+#include "node.h"
 
 ConnectionList::ConnectionList() {
     for(int i=0; i < MAX_CONNECTIONS; i++){
@@ -22,5 +23,10 @@ void ConnectionList::DeleteConnection(int index) {
 }
 
 void ConnectionList::Print() {
-
+    if(m_AmountConnections == 0) return;
+    std::cout << " -> ";
+    for(int i=0; i < m_AmountConnections; i++){
+        std::cout << m_Connections[i].GetNode()->GetName() << "(" << m_Connections[i].GetDistance() << "m)";
+        if(i != m_AmountConnections-1) std::cout << " -> ";
+    }
 }

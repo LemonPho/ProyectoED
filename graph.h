@@ -5,7 +5,6 @@
 
 class Node; //If we include node.h, node.h will include graph.h which will then include node.h, infinite.
 
-//consider changing name to graph
 class Graph {
 private:
     Node* m_Header;
@@ -25,6 +24,8 @@ public:
     void PrintGraph(); //show full graph with connections
     void PrintList(); //show just list of buildings
     void PrintListIndex(); //print list with index
+
+    int NodeCount();
 
     ~Graph();
 };

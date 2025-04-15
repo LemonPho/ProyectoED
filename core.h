@@ -19,11 +19,3 @@ public:
     ~Core();
 
 };
-
-enum MainMenuOptions {
-    INPUT_LOCATION = 1,
-    ADD_NODE,
-    EDIT_NODE,
-    DELETE_NODE,
-    CORE_EXIT,
-};

@@ -17,7 +17,5 @@ public:
 
     Node* GetNode();
     float GetDistance();
-
-
 };
 

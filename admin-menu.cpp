@@ -34,6 +34,7 @@ void AdminMenu::Run() {
         std::cout << "5. Salir" << std::endl;
         std::cout << "Opcion: ";
         std::cin >> option;
+        util::ClearBuffer();
         switch(option){
             case ADD_NODE: {
                 m_Graph->AddNode();
@@ -52,6 +53,7 @@ void AdminMenu::Run() {
 
             case SHOW_NODES: {
                 m_Graph->PrintGraph();
+                util::EnterToContinue();
                 break;
             }
 

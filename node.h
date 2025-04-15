@@ -2,14 +2,13 @@
 
 #include <iostream>
 
-class ConnectionList;
-class Connection;
+#include "connection-list.h"
 
 class Node {
 private:
     std::string m_Name; // each "building" has to have a unique name
 
-    ConnectionList* m_ConnectionList;
+    ConnectionList m_ConnectionList;
     
     Node* m_Next;
     Node* m_Prev;
@@ -24,7 +23,7 @@ public:
     void SetPrev(Node* prev);
 
     const std::string& GetName();
-    ConnectionList GetConnectionList();
+    ConnectionList& GetConnectionList();
     Node* GetNext();
     Node* GetPrev();
 

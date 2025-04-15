@@ -1,13 +1,13 @@
-#include "node.h"
 #include "connection-list.h"
+#include "node.h"
 
 Node::Node() {
     m_Next = nullptr;
     m_Prev = nullptr;
+    m_ConnectionList = ConnectionList();
 }
 
 Node::~Node() {
-    delete m_ConnectionList;
 }
 
 void Node::SetName(const std::string &name) {
@@ -15,11 +15,11 @@ void Node::SetName(const std::string &name) {
 }
 
 void Node::InsertConnection(Connection connection) {
-    m_ConnectionList->AddConnection(connection);
+    m_ConnectionList.AddConnection(connection);
 }
 
 void Node::DeleteConnection(int index) {
-    m_ConnectionList->DeleteConnection(index);
+    m_ConnectionList.DeleteConnection(index);
 }
 
 void Node::SetNext(Node *next) {
@@ -34,8 +34,8 @@ const std::string & Node::GetName() {
     return m_Name;
 }
 
-ConnectionList Node::GetConnectionList() {
-    return *m_ConnectionList;
+ConnectionList& Node::GetConnectionList() {
+    return m_ConnectionList;
 }
 
 Node* Node::GetNext() {
@@ -47,8 +47,9 @@ Node* Node::GetPrev() {
 }
 
 void Node::PrintFull() {
-    std::cout << m_Name << " -> ";
-    m_ConnectionList->Print();
+    std::cout << m_Name;
+    m_ConnectionList.Print();
+    std::cout << std::endl;
 }
 
 void Node::PrintSimple(){

@@ -2,4 +2,5 @@
 
 namespace util{
     void EnterToContinue();
+    void ClearBuffer();
 }

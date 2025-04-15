@@ -10,16 +10,25 @@ Graph::Graph(){
 void Graph::AddNode(){
     system(CLEAR);
 
-    Node* newNode = new Node();
+    Node* newNode = new Node(); //Node used for creating the new node
+    Node* searchNode = new Node(); //Node used for making sure the name is unique
     std::string tempName;
     int tempDistance;
 
     std::cout << "Ingresa el nombre del edificio: ";
     std::getline(std::cin, tempName);
 
+    //Make sure the name is unique
+    searchNode = GetNodeFromString(tempName);
+    while(searchNode){
+        std::cout << "Un edificio ya existe con ese nombre (" << tempName << "), ingrese un nombre diferente: ";
+        std::getline(std::cin, tempName);
+        searchNode = GetNodeFromString(tempName);
+    }
+
     Connection tempConnection;
     Node* selectedNode;
-    bool exitAddConnection = false;
+    bool exitAddConnection = NodeCount() == 0; //If there aren't nodes, then the node is saved without connections
     int index;
     while(!exitAddConnection){
         system(CLEAR);
@@ -32,19 +41,27 @@ void Graph::AddNode(){
             exitAddConnection = true;
         } else {
             selectedNode = GetNodeFromIndex(index);
-            while(!selectedNode){
+            while(!selectedNode && exitAddConnection){
                 std::cout << "No se encontro un edificio con el indice " << index << ", intenta de nuevo: ";
                 std::cin >> index;
+                //if -> user tries to cancel
+                if(!index) exitAddConnection = true;
                 selectedNode = GetNodeFromIndex(index);
             }
-            std::cout << "Ingresa la distancia: ";
-            std::cin >> tempDistance;
-            tempConnection = Connection(selectedNode, tempDistance);
-            newNode->InsertConnection(tempConnection);
+
+            //if to make sure user didn't cancel
+            if(!exitAddConnection){
+                std::cout << "Ingresa la distancia: ";
+                std::cin >> tempDistance;
+                tempConnection = Connection(selectedNode, tempDistance);
+                newNode->InsertConnection(tempConnection);
+            }
         }
     }
 
     newNode->SetName(tempName);
+
+    //insert node at the end
     Node* temp = m_Header;
     if(!temp){
         m_Header = newNode;        
@@ -83,6 +100,7 @@ Node *Graph::GetNodeFromIndex(const int index) {
     int i = 1;
     while(temp && i != index){
         temp = temp->GetNext();
+        i++;
     }
     return temp;
 }
@@ -102,6 +120,7 @@ void Graph::PrintGraph(){
 
     while(temp){
         temp->PrintFull();
+        std::cout << "|" << std::endl;
         temp = temp->GetNext();
     }
 }
@@ -132,13 +151,24 @@ void Graph::PrintListIndex() {
     while(temp){
         temp->PrintSimpleIndex(i);
         temp = temp->GetNext();
+        i++;
     }
 }
 
 Graph::~Graph(){
 }
 
+int Graph::NodeCount() {
+    if(!m_Header){
+        return 0;
+    }
 
+    Node* temp = m_Header;
+    int i=0;
+    while(temp){
+        i++;
+        temp = temp->GetNext();
+    }
 
-
-
+    return i;
+}
