@@ -17,5 +17,7 @@ public:
 
     Node* GetNode();
     float GetDistance();
+
+    bool operator<(Connection& connection);
 };
 

@@ -15,11 +15,12 @@ void NodeMenu::Run() {
         system(CLEAR);
         std::cout << m_Node->GetName() << " menu" << std::endl;
         std::cout << "Edificios Cercanos: " << std::endl;
-        m_Node->PrintConnections();
+        m_Node->GetConnectionList().Print();
         std::cout << "1. Ingresar Destino" << std::endl;
         std::cout << "2. Agregar Conexion" << std::endl;
         std::cout << "3. Quitar Conexion" << std::endl;
         std::cout << "4. Salir" << std::endl;
+        std::cout << "Opcion: ";
         std::cin >> option;
         switch(option){
             case INPUT_DESTINATION: {
@@ -40,7 +41,13 @@ void NodeMenu::Run() {
                 }
 
                 // array of connections to save the path from origin node (m_Node) to destinationNode
-                ConnectionList path = m_Graph->MakeShortestPath(m_Node, destinationNode);
+                ConnectionList path = m_Graph->FindShortestPath(m_Node, destinationNode);
+                break;
+            }
+
+            default: {
+                std::cout << "Opcion invalida" << std::endl;
+                util::EnterToContinue();
                 break;
             }
         }

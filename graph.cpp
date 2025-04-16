@@ -105,7 +105,11 @@ Node *Graph::GetNodeFromIndex(const int index) {
     return temp;
 }
 
-ConnectionList Graph::MakeShortestPath(Node* originNode, Node* destinationNode) {
+//TODO
+ConnectionList Graph::FindShortestPath(Node* originNode, Node* destinationNode) {
+    //destination node or origin node is not connected in any way to the other nodes
+    if(destinationNode->GetConnectionList().GetAmountConnections() == 0 || originNode->GetConnectionList().GetAmountConnections() == 0) return ConnectionList();
+
 
 }
 

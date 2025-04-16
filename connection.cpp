@@ -36,6 +36,10 @@ float Connection::GetDistance() {
     return m_Distance;
 }
 
+bool Connection::operator<(Connection &connection){
+    return this->GetDistance() < connection.GetDistance();
+}
+
 Node* Connection::GetNode() {
     return m_Node;
 }

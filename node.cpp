@@ -35,6 +35,7 @@ const std::string & Node::GetName() {
 }
 
 ConnectionList& Node::GetConnectionList() {
+    m_ConnectionList.QuickSort(0, m_ConnectionList.GetAmountConnections()-1);
     return m_ConnectionList;
 }
 
@@ -58,9 +59,6 @@ void Node::PrintSimple(){
 
 void Node::PrintSimpleIndex(int index){
     std::cout << index << ". " << m_Name << std::endl;
-}
-
-void Node::PrintConnections() {
 }
 
 Node& Node::operator=(const Node& other) {

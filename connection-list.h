@@ -12,6 +12,13 @@ private:
     Connection m_Connections[MAX_CONNECTIONS];
 public:
     ConnectionList();
+
+    int GetAmountConnections();
+    Connection GetConnection(int index);
+
+    ConnectionList QuickSort(int start, int end);
+    int Partition(int start, int end);
+    
     void AddConnection(Connection connection);
     void DeleteConnection(int index);
     void Print();

@@ -19,7 +19,7 @@ public:
     Node* GetNodeFromIndex(const int index);
 
     // makes an array of connections of the shortest path between two nodes
-    ConnectionList MakeShortestPath(Node* originNode, Node* destinationNode);
+    ConnectionList FindShortestPath(Node* originNode, Node* destinationNode);
 
     void PrintGraph(); //show full graph with connections
     void PrintList(); //show just list of buildings

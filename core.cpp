@@ -32,6 +32,7 @@ void Core::Run(){
             }
 
             NodeMenu nodeMenu = NodeMenu(selectedNode, m_Graph);
+            nodeMenu.Run();
         }
     } while(!exit);
 }

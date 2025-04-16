@@ -30,7 +30,6 @@ public:
     void PrintFull();
     void PrintSimple();
     void PrintSimpleIndex(int index);
-    void PrintConnections();
 
     Node& operator=(const Node& other);
     bool operator==(const Node& other) const;
