@@ -35,7 +35,7 @@ const std::string & Node::GetName() {
 }
 
 ConnectionList& Node::GetConnectionList() {
-    m_ConnectionList.QuickSort(0, m_ConnectionList.GetAmountConnections()-1);
+    if(m_ConnectionList.GetAmountConnections() > 0) m_ConnectionList.QuickSort(0, m_ConnectionList.GetAmountConnections());
     return m_ConnectionList;
 }
 
