@@ -1,5 +1,8 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
 #include "core.h"
 #include "node.h"
 #include "graph.h"

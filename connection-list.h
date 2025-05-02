@@ -16,7 +16,7 @@ public:
     int GetAmountConnections();
     Connection GetConnection(int index);
 
-    ConnectionList QuickSort(int start, int end);
+    void QuickSort(int start, int end);
     int Partition(int start, int end);
     
     void AddConnection(Connection connection);

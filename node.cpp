@@ -30,12 +30,12 @@ void Node::SetPrev(Node *prev){
     m_Prev = prev;
 }
 
-const std::string & Node::GetName() {
+const std::string Node::GetName() {
     return m_Name;
 }
 
 ConnectionList& Node::GetConnectionList() {
-    if(m_ConnectionList.GetAmountConnections() > 0) m_ConnectionList.QuickSort(0, m_ConnectionList.GetAmountConnections());
+    if(m_ConnectionList.GetAmountConnections() > 0) m_ConnectionList.QuickSort(0, m_ConnectionList.GetAmountConnections()-1);
     return m_ConnectionList;
 }
 
@@ -62,13 +62,13 @@ void Node::PrintSimpleIndex(int index){
 }
 
 Node& Node::operator=(const Node& other) {
-
+    return Node();
 }
 
 bool Node::operator==(const Node& other) const {
-
+    return false;
 }
 
 bool Node::operator!=(const Node& other) const {
-
+    return false;
 }

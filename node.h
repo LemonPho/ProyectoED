@@ -22,7 +22,7 @@ public:
     void SetNext(Node* next);
     void SetPrev(Node* prev);
 
-    const std::string& GetName();
+    const std::string GetName();
     ConnectionList& GetConnectionList();
     Node* GetNext();
     Node* GetPrev();

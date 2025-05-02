@@ -18,7 +18,7 @@ Connection ConnectionList::GetConnection(int index) {
     return m_Connections[index];
 }
 
-ConnectionList ConnectionList::QuickSort(int start, int end) {
+void ConnectionList::QuickSort(int start, int end) {
     if(start < end){
         int partition = Partition(start, end);
 
@@ -34,6 +34,7 @@ int ConnectionList::Partition(int start, int end){
 
     for(int j=start; j <= end; j++){
         if(m_Connections[j] < pivot){
+            i++;
             temp = m_Connections[j];
             m_Connections[j] = m_Connections[i];
             m_Connections[i] = temp;
@@ -64,9 +65,9 @@ void ConnectionList::DeleteConnection(int index) {
 
 void ConnectionList::Print() {
     if(m_AmountConnections == 0) return;
-    std::cout << " -> ";
     for(int i=0; i < m_AmountConnections; i++){
-        std::cout << m_Connections[i].GetNode()->GetName() << "(" << m_Connections[i].GetDistance() << "m)";
-        if(i != m_AmountConnections-1) std::cout << " -> ";
+        std::cout << m_Connections[i].GetNode()->GetName() << "(" << m_Connections[i].GetDistance() << "m)" << std::endl;
     }
+
+    std::cout << std::endl;
 }
