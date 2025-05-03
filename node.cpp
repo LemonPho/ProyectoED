@@ -62,7 +62,7 @@ void Node::PrintSimpleIndex(int index){
 }
 
 Node& Node::operator=(const Node& other) {
-    return Node();
+    return *this;
 }
 
 bool Node::operator==(const Node& other) const {

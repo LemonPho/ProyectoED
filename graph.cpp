@@ -110,7 +110,7 @@ ConnectionList Graph::FindShortestPath(Node* originNode, Node* destinationNode) 
     //destination node or origin node is not connected in any way to the other nodes
     if(destinationNode->GetConnectionList().GetAmountConnections() == 0 || originNode->GetConnectionList().GetAmountConnections() == 0) return ConnectionList();
 
-
+    return ConnectionList();
 }
 
 
