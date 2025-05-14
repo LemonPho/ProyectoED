@@ -6,6 +6,8 @@ void util::EnterToContinue(){
     getchar();
 }
 
+//https://stackoverflow.com/questions/7898215/how-can-i-clear-an-input-buffer-in-c
 void util::ClearBuffer(){
-    while((getchar()) != '\n');
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
 }

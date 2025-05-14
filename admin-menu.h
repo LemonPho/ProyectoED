@@ -13,6 +13,7 @@ public:
     void Run();
 };
 
+//Menu constants
 enum AdminMenuOptions {
     ADD_NODE = 1,
     EDIT_NODE,

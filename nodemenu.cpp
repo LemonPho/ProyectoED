@@ -13,10 +13,11 @@ void NodeMenu::Run() {
 
     do{
         system(CLEAR);
+
         std::cout << m_Node->GetName() << " menu" << std::endl;
         if(m_Node->GetConnectionList().GetAmountConnections() > 0){
             std::cout << "Edificios Cercanos: " << std::endl;
-            m_Node->GetConnectionList().Print();
+            m_Node->GetConnectionList().PrintNearby();
         } else {
             std::cout << "Este edificio no tiene conexiones" << std::endl;
         }
@@ -27,6 +28,7 @@ void NodeMenu::Run() {
         std::cout << "4. Salir" << std::endl;
         std::cout << "Opcion: ";
         std::cin >> option;
+        util::ClearBuffer();
         switch(option){
             case INPUT_DESTINATION: {
                 system(CLEAR);

@@ -7,7 +7,7 @@ Connection::Connection() {
     m_Distance = 0.0;
 }
 
-Connection::Connection(Node* node, float distance) {
+Connection::Connection(Node* node, double distance) {
     if(distance < 0){
         std::cout << "No se puede ingresar una distancia menor a 0, operacion cancelada" << std::endl;
         util::EnterToContinue();
@@ -22,7 +22,7 @@ void Connection::SetNode(Node* node) {
     m_Node = node;
 }
 
-void Connection::SetDistance(float distance){
+void Connection::SetDistance(double distance){
     if(distance < 0){
         std::cout << "No se puede ingresar una distancia menor a 0, operacion cancelada" << std::endl;
         util::EnterToContinue();
@@ -32,7 +32,7 @@ void Connection::SetDistance(float distance){
     m_Distance = distance;
 }
 
-float Connection::GetDistance() {
+double Connection::GetDistance() {
     return m_Distance;
 }
 

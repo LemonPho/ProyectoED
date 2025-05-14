@@ -7,13 +7,13 @@ Graph::Graph(){
     m_Header = nullptr;
 }
 
-void Graph::AddNode(){
+void Graph::CreateNode(){
     system(CLEAR);
 
     Node* newNode = new Node(); //Node used for creating the new node
     Node* searchNode = new Node(); //Node used for making sure the name is unique
     std::string tempName;
-    int tempDistance;
+    double tempDistance;
 
     std::cout << "Ingresa el nombre del edificio: ";
     std::getline(std::cin, tempName);
@@ -60,7 +60,12 @@ void Graph::AddNode(){
     }
 
     newNode->SetName(tempName);
+    InsertNode(newNode);
+    std::cout << "Edificio registrado" << std::endl;
+    util::EnterToContinue();
+}
 
+void Graph::InsertNode(Node* newNode){
     //insert node at the end
     Node* temp = m_Header;
     if(!temp){
@@ -73,9 +78,6 @@ void Graph::AddNode(){
         temp->SetNext(newNode);
         newNode->SetPrev(temp);
     }
-
-    std::cout << "Edificio registrado" << std::endl;
-    util::EnterToContinue();
 }
 
 void Graph::EditNode(){
@@ -159,7 +161,20 @@ void Graph::PrintListIndex() {
     }
 }
 
+void Graph::PrintErrorMessages(){
+    std::cout << m_ErrorMessages;
+    m_ErrorMessages = "";
+}
+
 Graph::~Graph(){
+    //delete graph, although this is only used for when the program is closed, so either way the operating system deletes everything associated
+    Node* temp = m_Header;
+    m_Header = m_Header->GetNext();
+    while(temp){
+        delete temp;
+        temp = m_Header;
+        m_Header = m_Header->GetNext();
+    }
 }
 
 int Graph::NodeCount() {
@@ -175,4 +190,68 @@ int Graph::NodeCount() {
     }
 
     return i;
+}
+
+void Graph::ReadFromDisk(){
+    std::ifstream buildings(BUILDINGS_FILE, std::ios::in);
+    std::ifstream connections(CONNECTIONS_FILE, std::ios::in);
+
+    if(!buildings.is_open() || !connections.is_open()){
+        m_ErrorMessages += "El archivo con la informacion de los edificios no se pudo abrir\n";
+        return;
+    }
+
+    std::string line;
+    Node* newNode;
+    while(std::getline(buildings, line)){
+        newNode = new Node();
+        newNode->SetName(line);
+        InsertNode(newNode);
+    }
+
+    Connection connection;
+    Node* originNode;
+    Node* destinationNode;
+    double distance;
+    std::string distanceStr;
+    std::string originName;
+    std::string destinationName;
+
+    while(std::getline(connections, line)){
+        //string stream so that we can use getline on the line
+        std::istringstream liness(line);
+        connection = Connection();
+        
+        //getting the name of the origin node
+        std::getline(liness, originName, '|');
+        originNode = GetNodeFromString(originName);
+
+        //getting the name of the destination node
+        std::getline(liness, destinationName, '|');
+        destinationNode = GetNodeFromString(destinationName);
+
+        //getting distance then converting to double
+        std::getline(liness, distanceStr);
+        distance = std::stof(distanceStr);
+
+        //one or both of the buildings was not found
+        if(!originNode || !destinationNode){
+            m_ErrorMessages += "No se pudo hacer la conexion entre " + originName + " y " + destinationName + " porque no se encontro: ";
+            if(!originNode && !destinationNode){
+                m_ErrorMessages += "ambos edificios\n";
+            } else if (!originNode){
+                m_ErrorMessages += "el edificio " + originName + "\n";
+            } else if (!destinationNode){
+                m_ErrorMessages += "el edificio " + destinationName + "\n";
+            }
+        } else {
+            connection.SetNode(destinationNode);
+            connection.SetDistance(distance);
+            originNode->InsertConnection(connection);
+        }
+    }
+}
+
+void Graph::WriteToDisk(){
+
 }

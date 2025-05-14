@@ -8,36 +8,52 @@ Core::Core() {
 }
 
 void Core::Run(){
-    bool exit = false;
+    //read the graph from the disk
+    m_Graph->ReadFromDisk();
 
+    bool exit = false;
     std::string buildingInput;
     Node* selectedNode;
+    
     do{
         system(CLEAR);
         std::cout << "Mapa CUCEI" << std::endl;
+        m_Graph->PrintErrorMessages();
         m_Graph->PrintList();
         std::cout << "Ingresa su ubicacion (0. menu de admin, 1. Salir): ";
         std::getline(std::cin, buildingInput);
+
         if(buildingInput == "0"){
+            //open admin menu
             AdminMenu adminMenu = AdminMenu(m_Graph);
             adminMenu.Run();
         } else if(buildingInput == "1"){
+            //exit program
             exit = true;
         } else {
+            //open node menu
+            bool cancelSearch = false;
             selectedNode = m_Graph->GetNodeFromString(buildingInput);
-            while(!selectedNode){
-                std::cout << "No se encontro el edificio buscado (" << buildingInput << "), intenta de nuevo: ";
+            while(!selectedNode && !cancelSearch){
+                //node not found
+                std::cout << "No se encontro el edificio buscado (" << buildingInput << "), intenta de nuevo (0 para cancelar): ";
                 std::getline(std::cin, buildingInput);
-                selectedNode = m_Graph->GetNodeFromString(buildingInput);
+                if(buildingInput == "0"){
+                    cancelSearch = true;
+                } else {
+                    selectedNode = m_Graph->GetNodeFromString(buildingInput);
+                }
             }
 
-            NodeMenu nodeMenu = NodeMenu(selectedNode, m_Graph);
-            nodeMenu.Run();
+            if(!cancelSearch){
+                NodeMenu nodeMenu = NodeMenu(selectedNode, m_Graph);
+                nodeMenu.Run();    
+            }
         }
     } while(!exit);
 }
 
 
 Core::~Core() {
-
+    delete m_Graph;
 }

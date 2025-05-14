@@ -63,11 +63,22 @@ void ConnectionList::DeleteConnection(int index) {
 
 }
 
-void ConnectionList::Print() {
+//prints the nearby buildings (limits to 5), and they are ordered by distance
+void ConnectionList::PrintNearby(){
     if(m_AmountConnections == 0) return;
-    for(int i=0; i < m_AmountConnections; i++){
+
+    int limit = (m_AmountConnections > 5) ? 5 : m_AmountConnections;
+
+    for(int i=0; i < limit; i++){
         std::cout << m_Connections[i].GetNode()->GetName() << "(" << m_Connections[i].GetDistance() << "m)" << std::endl;
     }
-
     std::cout << std::endl;
+}
+
+//prints all the connections, also ordered
+void ConnectionList::Print() {
+    if(m_AmountConnections == 0) std::cout << " (sin conexiones)";
+    for(int i=0; i < m_AmountConnections; i++){
+        std::cout << "-> " << m_Connections[i].GetNode()->GetName() << "(" << m_Connections[i].GetDistance() << "m)";
+    }
 }

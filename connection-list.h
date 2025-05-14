@@ -4,7 +4,7 @@
 #include "connection.h"
 #include "util.h"
 
-const int MAX_CONNECTIONS = 5;
+const int MAX_CONNECTIONS = 10;
 
 class ConnectionList{
 private:
@@ -13,13 +13,19 @@ private:
 public:
     ConnectionList();
 
+    //get
     int GetAmountConnections();
     Connection GetConnection(int index);
 
+    //sorting
     void QuickSort(int start, int end);
     int Partition(int start, int end);
     
+    //management
     void AddConnection(Connection connection);
     void DeleteConnection(int index);
+
+    //print
+    void PrintNearby();
     void Print();
 };

@@ -37,7 +37,7 @@ void AdminMenu::Run() {
         util::ClearBuffer();
         switch(option){
             case ADD_NODE: {
-                m_Graph->AddNode();
+                m_Graph->CreateNode();
                 break;
             }
 

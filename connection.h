@@ -7,16 +7,16 @@ class Node;
 class Connection {
 private:
     Node* m_Node;
-    float m_Distance;
+    double m_Distance;
 public:
     Connection();
-    Connection(Node* node, float distance);
+    Connection(Node* node, double distance);
 
     void SetNode(Node* node);
-    void SetDistance(float distance);
+    void SetDistance(double distance);
 
     Node* GetNode();
-    float GetDistance();
+    double GetDistance();
 
     bool operator<(Connection& connection);
 };
