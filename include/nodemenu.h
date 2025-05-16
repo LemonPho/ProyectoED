@@ -21,7 +21,5 @@ public:
 
 enum NodeMenuOptions{
     INPUT_DESTINATION = 1,
-    ADD_CONNECTION,
-    REMOVE_CONNECTION,
     NODE_EXIT,
 };

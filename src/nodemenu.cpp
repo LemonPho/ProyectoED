@@ -23,9 +23,7 @@ void NodeMenu::Run() {
         }
         
         std::cout << "1. Ingresar Destino" << std::endl;
-        std::cout << "2. Agregar Conexion" << std::endl;
-        std::cout << "3. Quitar Conexion" << std::endl;
-        std::cout << "4. Salir" << std::endl;
+        std::cout << "2. Salir" << std::endl;
         std::cout << "Opcion: ";
         std::cin >> option;
         util::ClearBuffer();

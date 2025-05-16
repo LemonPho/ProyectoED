@@ -59,8 +59,43 @@ void ConnectionList::AddConnection(Connection connection) {
     m_AmountConnections++;
 }
 
-void ConnectionList::DeleteConnection(int index) {
+void ConnectionList::DeleteConnectionIndex(int index) {
+    //return if index is out of range
+    if(index < 0 || index > m_AmountConnections-1) return;
 
+    //delete the connection
+    m_Connections[index] = Connection();
+    RemoveEmptySpaces();
+}
+
+void ConnectionList::DeleteConnectionNode(Node* node) {
+    bool connectionDeleted = false;
+    for (size_t i = 0; i < m_AmountConnections; i++) {
+        if (m_Connections[i].GetNode() == node) {
+            m_Connections[i] = Connection();
+            connectionDeleted = true;
+        }
+    }
+
+    if (connectionDeleted) RemoveEmptySpaces();
+}
+
+//function used after deleting elements from the array, this shifts the elements ahead to fill the empty spaces
+//it is necessary to run after using any of the delete functions, because they dont decrement the amountConnections variable
+void ConnectionList::RemoveEmptySpaces(){
+    Connection emptyConnection = Connection();
+    for(int i=0; i < m_AmountConnections-1; i++){
+        //connection is either a deleted node or just empty
+        if(m_Connections[i] == emptyConnection){
+            //shift all the connections ahead one spot behind
+            for(size_t j=i+1; j < m_AmountConnections; j++){
+                m_Connections[j-1] = m_Connections[j];
+                m_Connections[j] = Connection();
+            }
+            m_AmountConnections--;
+            i--;
+        }
+    }
 }
 
 //prints the nearby buildings (limits to 5), and they are ordered by distance
@@ -80,5 +115,12 @@ void ConnectionList::Print() {
     if(m_AmountConnections == 0) std::cout << " (sin conexiones)";
     for(int i=0; i < m_AmountConnections; i++){
         std::cout << "-> " << m_Connections[i].GetNode()->GetName() << "(" << m_Connections[i].GetDistance() << "m)";
+    }
+}
+
+void ConnectionList::PrintIndexed(){
+    if(m_AmountConnections == 0) std::cout << " (sin conexiones)";
+    for(int i=0; i < m_AmountConnections; i++){
+        std::cout << i+1 << ". " << m_Connections[i].GetNode()->GetName() << std::endl;
     }
 }

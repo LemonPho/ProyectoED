@@ -23,9 +23,12 @@ public:
     
     //management
     void AddConnection(Connection connection);
-    void DeleteConnection(int index);
+    void DeleteConnectionIndex(int index);
+    void DeleteConnectionNode(Node* node);
+    void RemoveEmptySpaces();
 
     //print
     void PrintNearby();
     void Print();
+    void PrintIndexed();
 };

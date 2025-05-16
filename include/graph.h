@@ -18,10 +18,8 @@ private:
 public:
     Graph();
 
-    void CreateNode();
     void InsertNode(Node* newNode);
-    void EditNode();
-    void DeleteNode();
+    void DeleteNode(int index);
 
     Node* GetNodeFromString(const std::string& nodeName);
     Node* GetNodeFromIndex(const int index);

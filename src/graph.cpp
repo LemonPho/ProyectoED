@@ -7,64 +7,6 @@ Graph::Graph(){
     m_Header = nullptr;
 }
 
-void Graph::CreateNode(){
-    system(CLEAR);
-
-    Node* newNode = new Node(); //Node used for creating the new node
-    Node* searchNode = new Node(); //Node used for making sure the name is unique
-    std::string tempName;
-    double tempDistance;
-
-    std::cout << "Ingresa el nombre del edificio: ";
-    std::getline(std::cin, tempName);
-
-    //Make sure the name is unique
-    searchNode = GetNodeFromString(tempName);
-    while(searchNode){
-        std::cout << "Un edificio ya existe con ese nombre (" << tempName << "), ingrese un nombre diferente: ";
-        std::getline(std::cin, tempName);
-        searchNode = GetNodeFromString(tempName);
-    }
-
-    Connection tempConnection;
-    Node* selectedNode;
-    bool exitAddConnection = NodeCount() == 0; //If there aren't nodes, then the node is saved without connections
-    int index;
-    while(!exitAddConnection){
-        system(CLEAR);
-        std::cout << "AGREGAR CONEXIONES" << std::endl;
-        PrintListIndex();
-        std::cout << "0. Salir" << std::endl;
-        std::cout << "Ingresa el indice del edificio que quiere agregar como conexion: ";
-        std::cin >> index;
-        if(!index){
-            exitAddConnection = true;
-        } else {
-            selectedNode = GetNodeFromIndex(index);
-            while(!selectedNode && exitAddConnection){
-                std::cout << "No se encontro un edificio con el indice " << index << ", intenta de nuevo: ";
-                std::cin >> index;
-                //if -> user tries to cancel
-                if(!index) exitAddConnection = true;
-                selectedNode = GetNodeFromIndex(index);
-            }
-
-            //if to make sure user didn't cancel
-            if(!exitAddConnection){
-                std::cout << "Ingresa la distancia: ";
-                std::cin >> tempDistance;
-                tempConnection = Connection(selectedNode, tempDistance);
-                newNode->InsertConnection(tempConnection);
-            }
-        }
-    }
-
-    newNode->SetName(tempName);
-    InsertNode(newNode);
-    std::cout << "Edificio registrado" << std::endl;
-    util::EnterToContinue();
-}
-
 void Graph::InsertNode(Node* newNode){
     //insert node at the end
     Node* temp = m_Header;
@@ -80,11 +22,25 @@ void Graph::InsertNode(Node* newNode){
     }
 }
 
-void Graph::EditNode(){
+void Graph::DeleteNode(int index){
+    Node* deleteNode = GetNodeFromIndex(index);
 
-}
+    //assign pointers to omit the node to be deleted
+    deleteNode->GetPrev()->SetNext(deleteNode->GetNext());
+    deleteNode->GetNext()->SetPrev(deleteNode->GetPrev());
 
-void Graph::DeleteNode(){
+    std::cout << "Omitted node" << std::endl;
+
+    //clean up connections (remove connections to the node)
+    Node* temp = m_Header;
+    while (temp) {
+        temp->DeleteConnectionNode(deleteNode);
+        temp = temp->GetNext();
+    }
+
+    delete deleteNode;
+
+    
 }
 
 Node* Graph::GetNodeFromString(const std::string& nodeName) {
@@ -170,11 +126,13 @@ Graph::~Graph(){
     //delete graph, although this is only used for when the program is closed, so either way the operating system deletes everything associated
     Node* temp = m_Header;
     m_Header = m_Header->GetNext();
-    while(temp){
+    while(m_Header){
         delete temp;
         temp = m_Header;
         m_Header = m_Header->GetNext();
     }
+
+    delete temp;
 }
 
 int Graph::NodeCount() {

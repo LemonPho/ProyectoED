@@ -40,6 +40,10 @@ bool Connection::operator<(Connection &connection){
     return this->GetDistance() < connection.GetDistance();
 }
 
+bool Connection::operator==(Connection &connection){
+    return this->GetNode() == connection.GetNode();
+}
+
 Node* Connection::GetNode() {
     return m_Node;
 }

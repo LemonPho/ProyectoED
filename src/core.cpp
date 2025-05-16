@@ -1,7 +1,7 @@
 #include "core.h"
 #include "nodemenu.h"
 #include "graph.h"
-#include "admin-menu.h"
+#include "graph-admin-menu.h"
 
 Core::Core() {
     m_Graph = new Graph();
@@ -25,8 +25,8 @@ void Core::Run(){
 
         if(buildingInput == "0"){
             //open admin menu
-            AdminMenu adminMenu = AdminMenu(m_Graph);
-            adminMenu.Run();
+            GraphAdminMenu graphAdminMenu = GraphAdminMenu(m_Graph);
+            graphAdminMenu.Run();
         } else if(buildingInput == "1"){
             //exit program
             exit = true;
