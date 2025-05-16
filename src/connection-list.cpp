@@ -83,6 +83,12 @@ void ConnectionList::DeleteConnectionNode(Node* node) {
 //function used after deleting elements from the array, this shifts the elements ahead to fill the empty spaces
 //it is necessary to run after using any of the delete functions, because they dont decrement the amountConnections variable
 void ConnectionList::RemoveEmptySpaces(){
+    //if we dont do this the for never runs so the decrement never happens
+    if (m_AmountConnections == 1) {
+        m_AmountConnections--;
+        return;
+    }
+
     Connection emptyConnection = Connection();
     for(int i=0; i < m_AmountConnections-1; i++){
         //connection is either a deleted node or just empty

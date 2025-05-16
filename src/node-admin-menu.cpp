@@ -36,7 +36,7 @@ void NodeAdminMenu::Run(){
                 if(m_Node->GetConnectionList().GetAmountConnections() == 0){
                     std::cout << "El edificio no tiene conexiones" << std::endl;
                     util::EnterToContinue();
-                    return;
+                    break;
                 }
 
                 int index;

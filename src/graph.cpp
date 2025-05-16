@@ -26,8 +26,14 @@ void Graph::DeleteNode(int index){
     Node* deleteNode = GetNodeFromIndex(index);
 
     //assign pointers to omit the node to be deleted
-    deleteNode->GetPrev()->SetNext(deleteNode->GetNext());
-    deleteNode->GetNext()->SetPrev(deleteNode->GetPrev());
+    if (deleteNode == m_Header) { //node is the header
+        m_Header = m_Header->GetNext();
+    } else if (deleteNode->GetNext()) { //node is in the middle of the pack
+        deleteNode->GetNext()->SetPrev(deleteNode->GetPrev());
+        deleteNode->GetPrev()->SetNext(deleteNode->GetNext());
+    } else if (!deleteNode->GetNext()) { //node is the last element in the list
+        deleteNode->GetPrev()->SetNext(nullptr);
+    }
 
     std::cout << "Omitted node" << std::endl;
 
