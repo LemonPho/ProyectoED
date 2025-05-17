@@ -214,6 +214,9 @@ void Graph::ReadFromDisk(){
             originNode->InsertConnection(connection);
         }
     }
+
+    buildings.close();
+    connections.close();
 }
 
 void Graph::WriteToDisk(){
