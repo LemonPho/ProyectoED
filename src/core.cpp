@@ -18,6 +18,7 @@ void Core::Run(){
     do{
         system(CLEAR);
         std::cout << "Mapa CUCEI" << std::endl;
+        Map();
         m_Graph->PrintErrorMessages();
         m_Graph->PrintList();
         std::cout << "Ingresa su ubicacion (0. menu de admin, 1. Salir): ";
@@ -56,4 +57,17 @@ void Core::Run(){
 
 Core::~Core() {
     delete m_Graph;
+}
+
+void Core::Map() {
+    std::ifstream mapaFile("mapAscii.txt", std::ios::in);
+    if (!mapaFile.is_open()) {
+        m_ErrorMessages += "No se pudo abrir el archivo del mapa (mapAscii.txt)\n";
+        return;
+    }
+    std::string linea;
+    while (std::getline(mapaFile, linea)) {
+        std::cout << linea << std::endl;
+    }
+    mapaFile.close();
 }

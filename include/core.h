@@ -18,5 +18,7 @@ public:
     Core();
     void Run();
     ~Core();
+    void Map();
+    std::string m_ErrorMessages;
 
 };
