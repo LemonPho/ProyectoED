@@ -1,10 +1,10 @@
-#include "admin-menu.h"
+#include "graph-admin-menu.h"
 
-AdminMenu::AdminMenu(Graph* graph) {
+GraphAdminMenu::GraphAdminMenu(Graph* graph) {
     m_Graph = graph;
 }
 
-void AdminMenu::Run() {
+void GraphAdminMenu::Run() {
     system(CLEAR);
 
     std::string username, password;
@@ -37,17 +37,48 @@ void AdminMenu::Run() {
         util::ClearBuffer();
         switch(option){
             case ADD_NODE: {
-                m_Graph->CreateNode();
+                Node* newNode = new Node();
+                newNode->Create(m_Graph);
+                m_Graph->InsertNode(newNode);
                 break;
             }
 
             case EDIT_NODE: {
-                m_Graph->EditNode();
+                system(CLEAR);
+                int index;
+                Node* node;
+
+                m_Graph->PrintListIndex();
+                std::cout << "Ingresa el indice del nodo que quiere modificar: ";
+                std::cin >> index;
+                //no need to decrement index because in Graph::GetNodeFromIndex it starts at 1
+                while(index < 1 && index > m_Graph->NodeCount()){
+                    std::cout << "Ingrese un valor valido (es menor a 0 o mayor que el indice maximo): ";
+                    std::cin >> index;
+                }
+
+                node = m_Graph->GetNodeFromIndex(index);
+                if(!node){
+                    std::cout << "Hubo un error al intentar cargar la informacion del nodo";
+                    util::EnterToContinue();
+                    break;
+                }
+                
+                NodeAdminMenu nodeAdminMenu = NodeAdminMenu(node, m_Graph);
+                nodeAdminMenu.Run();
+
                 break;
             }
 
             case DELETE_NODE: {
-                m_Graph->DeleteNode();
+                system(CLEAR);
+                std::cout << "ELIMINAR EDIFICIO" << std::endl;
+
+                int index;
+                m_Graph->PrintListIndex();
+                std::cout << "Ingresa el indice del edificio que quiere eliminar: ";
+                std::cin >> index;
+                m_Graph->DeleteNode(index);
                 break;
             }
 

@@ -19,5 +19,6 @@ public:
     double GetDistance();
 
     bool operator<(Connection& connection);
+    bool operator==(Connection& connection);
 };
 

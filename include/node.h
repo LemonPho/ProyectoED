@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include "connection-list.h"
+#include "graph.h"
+#include "core.h"
 
 class Node {
 private:
@@ -16,9 +18,14 @@ public:
     Node();
     ~Node();
 
+    void Create(Graph* graph);
+
+    void AddConnection(Graph* graph);
+
     void SetName(const std::string& name);
     void InsertConnection(Connection connection);
-    void DeleteConnection(int index);
+    void DeleteConnectionIndex(int index);
+    void DeleteConnectionNode(Node* node);
     void SetNext(Node* next);
     void SetPrev(Node* prev);
 
@@ -28,6 +35,7 @@ public:
     Node* GetPrev();
 
     void PrintFull();
+    void PrintConnectionsIndexed();
     void PrintSimple();
     void PrintSimpleIndex(int index);
 
