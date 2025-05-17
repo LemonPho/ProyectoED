@@ -1,0 +1,44 @@
+                                                   [TREN]<-------->[ENTRADA CDU]
+              [COMEDORES X]                           |                   |
+                   | 	                              v                   v
+                   |                     [ENTRADA REVOLUCIÓN]       [COLISEO]<----->[EST. CDU]     
+              [X]<-┼----->[V]<-----┐            |                        |              |
+                   |       |       v            v                        v              |
+              [W]<-┼---->[V2]<--->[U]<----->[TITANIC]                  [GYM]<-----------┤
+                   |       |       |           |                                        |
+                 ┌-┘       |       V           v                                        |     
+                 |         |      [T]<------>[FLOR]                                     |    
+       [Z2]<-----┤         |       |           |                                        |
+        |        |         v       v           v                                        |
+        |  [ JARDIN ]<--->[S]<--->[R]<------->[Q]<------┐                               |
+     ┌--┤  [CHEDRAUI]      └┐      |                  [JOBS]----------┐                 |
+[Z]-[Z] V       |           v      └---->[P]<-----------┘             |                 |
+       [Y]<-----┤          [O]                                        |                 v
+                |           |                                   [CDU-CUCEI]-------->[CAFE]<--->[CDU]            
+                └-------┬->[N]                                        |                 |
+                        |   |     ┌----->[DIV. CIENCIAS BASICAS]<-----┤                 |
+                        └->[M]   [L2]         |                       |                 |
+                            |     |           |                       |                 |
+                           [K]<---┴-------->[ALFA]<---------┐         |                 |
+                            |                |      [TEC. APREND.]<---┤                 |
+                           [J]              [BETA]<---------┤         V                 |
+                      [H]   |    ┌--->[I]<---┤          [EST. ESTUDIANTES]              V
+          ┌-->[G]<-----┴----┴----┤           └>[GLOBO]<-----┤                        [ALBERCA]<------>[EST. OLIMPICA]<---->[EST. 2]
+          |                     [F]               |         |              
+          |                      |                |         |	
+          |                      ├------->[E]<----┘         |              
+          |                      |                          |
+          |                      |                          |
+          └--------┐             |                          └---┬-->[PISTA]
+                   V             |                              |
+              [FAJARDIN]<------┬-┴--->[BIBLIOTECA]              |
+                   |           |                                |
+              ┌----┘           ├--------------┐                 |
+              V                |              V                 |   
+    [ENTRADA BOULEVARD]<-------┤            [D]<--┐             |
+                               |                  V             |
+                               V                 [C]<----┐      |
+                           [PROULEX]                     V      |
+                               |                      [CUCS]<---┴-----┐
+                        [CONTROL ESCOLAR]                             V
+                                                             [ENTRADA OLIMPICA]  
