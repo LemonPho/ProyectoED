@@ -39,6 +39,8 @@ public:
     void PrintSimple();
     void PrintSimpleIndex(int index);
 
+    void WriteToDisk(std::ofstream &file);
+
     Node& operator=(const Node& other);
     bool operator==(const Node& other) const;
     bool operator!=(const Node& other) const;

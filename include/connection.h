@@ -18,6 +18,8 @@ public:
     Node* GetNode();
     double GetDistance();
 
+    void WriteToDisk(std::ofstream &file, const std::string &originString);
+
     bool operator<(Connection& connection);
     bool operator==(Connection& connection);
 };

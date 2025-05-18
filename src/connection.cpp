@@ -47,3 +47,10 @@ bool Connection::operator==(Connection &connection){
 Node* Connection::GetNode() {
     return m_Node;
 }
+
+void Connection::WriteToDisk(std::ofstream& file, const std::string &originString) {
+    if (!file.is_open()) return;
+
+    std::cout << "\t" << originString << "->" << m_Node->GetName() << std::endl;
+    file << originString << "|" << m_Node->GetName() << "|" << m_Distance << std::endl;
+}

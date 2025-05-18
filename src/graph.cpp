@@ -165,6 +165,7 @@ void Graph::ReadFromDisk(){
         return;
     }
 
+    //read from buildings.txt
     std::string line;
     Node* newNode;
     while(std::getline(buildings, line)){
@@ -172,7 +173,9 @@ void Graph::ReadFromDisk(){
         newNode->SetName(line);
         InsertNode(newNode);
     }
+    buildings.close();
 
+    //read from connections.txt
     Connection connection;
     Node* originNode;
     Node* destinationNode;
@@ -181,6 +184,7 @@ void Graph::ReadFromDisk(){
     std::string originName;
     std::string destinationName;
 
+    //should look into moving this logic to connection or somethign but not sure if possible
     while(std::getline(connections, line)){
         //string stream so that we can use getline on the line
         std::istringstream liness(line);
@@ -215,10 +219,35 @@ void Graph::ReadFromDisk(){
         }
     }
 
-    buildings.close();
     connections.close();
 }
 
 void Graph::WriteToDisk(){
+    std::ofstream buildings(BUILDINGS_FILE, std::ios::in);
+    std::ofstream connections(CONNECTIONS_FILE, std::ios::in);
 
+    if (!buildings.is_open() || !connections.is_open()) {
+        m_ErrorMessages += "El archivo con la informacion de los edificios no se pudo abrir\n";
+        return;
+    }
+
+
+    //write to buildings.txt
+    std::string line;
+    Node* temp = m_Header;
+    while (temp) {
+        temp->WriteToDisk(buildings);
+        temp = temp->GetNext();
+    }
+    buildings.close();
+    
+    //write to connections.txt
+    temp = m_Header;
+    while (temp) {
+        temp->GetConnectionList().WriteToDisk(connections, temp->GetName());
+        temp = temp->GetNext();
+    }
+
+    util::EnterToContinue();
+    connections.close();
 }

@@ -40,6 +40,7 @@ void GraphAdminMenu::Run() {
                 Node* newNode = new Node();
                 newNode->Create(m_Graph);
                 m_Graph->InsertNode(newNode);
+                m_Graph->WriteToDisk();
                 break;
             }
 
@@ -66,7 +67,7 @@ void GraphAdminMenu::Run() {
                 
                 NodeAdminMenu nodeAdminMenu = NodeAdminMenu(node, m_Graph);
                 nodeAdminMenu.Run();
-
+                m_Graph->WriteToDisk();
                 break;
             }
 
@@ -79,6 +80,7 @@ void GraphAdminMenu::Run() {
                 std::cout << "Ingresa el indice del edificio que quiere eliminar: ";
                 std::cin >> index;
                 m_Graph->DeleteNode(index);
+                m_Graph->WriteToDisk();
                 break;
             }
 

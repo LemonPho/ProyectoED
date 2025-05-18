@@ -31,4 +31,7 @@ public:
     void PrintNearby();
     void Print();
     void PrintIndexed();
+
+    //disk
+    void WriteToDisk(std::ofstream& file, const std::string &originName); //sending by reference to avoid stream issues
 };

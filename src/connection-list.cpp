@@ -130,3 +130,12 @@ void ConnectionList::PrintIndexed(){
         std::cout << i+1 << ". " << m_Connections[i].GetNode()->GetName() << std::endl;
     }
 }
+
+void ConnectionList::WriteToDisk(std::ofstream &file, const std::string& originName) {
+    if (!file.is_open()) return;
+
+    std::cout << originName << std::endl;
+    for (size_t i = 0; i < m_AmountConnections; i++) {
+        m_Connections[i].WriteToDisk(file, originName);
+    }
+}

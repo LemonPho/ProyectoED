@@ -127,6 +127,12 @@ void Node::PrintSimpleIndex(int index){
     std::cout << index << ". " << m_Name << std::endl;
 }
 
+void Node::WriteToDisk(std::ofstream &file) {
+    if (!file.is_open()) return;
+
+    file << m_Name << std::endl;
+}
+
 Node& Node::operator=(const Node& other) {
     return *this;
 }
