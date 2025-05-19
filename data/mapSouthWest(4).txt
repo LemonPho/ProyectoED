@@ -1,0 +1,25 @@
+CIAS BASICAS]<-----┤                 |
+                   |                 |
+                   |                 |
+---------┐         |                 |
+ [TEC. APREND.]<---┤                 |
+---------┤         V                 |
+     [EST. ESTUDIANTES]              V
+BO]<-----┤                        [ALBERCA]<------>[EST. OLIMPICA]<---->[EST. 2]
+         |              
+         |	
+         |              
+         |
+         |
+         └---┬-->[PISTA]
+             |
+             |
+             |
+             |
+             |   
+             |
+ <----┐      |
+      V      |
+   [CUCS]<---┴-----┐
+                   V
+          [ENTRADA OLIMPICA]  
