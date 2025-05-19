@@ -84,35 +84,40 @@ int busquedaBinaria(int arr[], int n, int valor) {
     }
     return -1;
 }
+void QuickSort::ordenar(int arreglo[], int start, int end) {
+    if (start >= end) return;
 
-void QuickSort::ordenar(int arreglo[],int start,int end){
-    if (end <= start) {
-        return ;
-    }
-    int pivot=partir(arreglo, start, end);
-    ordenar(arreglo, start, pivot-1);
-    ordenar(arreglo, pivot+1, end);
-    
+    int pivot = partir(arreglo, start, end);
+    ordenar(arreglo, start, pivot - 1);
+    ordenar(arreglo, pivot + 1, end);
 }
-int QuickSort::partir(int arreglo[], int start, int end){
 
-    int pivot=arreglo[end];
-    int i=start-1, aux=0;
-    
-    for (int j=start; j < end; j++) {
-        if(arreglo[j]<=pivot){
+int QuickSort::partir(int arreglo[], int start, int end) {
+    int pivot = arreglo[end];
+    int i = start - 1;
+
+    for (int j = start; j < end; j++) {
+        if (arreglo[j] <= pivot) {
             i++;
-            aux= arreglo[i];
-            arreglo[i]=arreglo[j];
-            arreglo[j]=aux;
-            est++;
+            std::swap(arreglo[i], arreglo[j]);
+            //est++; // this needs to be declared in order for it to work
         }
     }
-    i++;
-    aux= arreglo[i];
-    arreglo[i]=arreglo[end];
-    arreglo[end]=aux;
+
+    std::swap(arreglo[i + 1], arreglo[end]);
     est++;
+    return i + 1;
+}
+
+std::string metersToWalkingTime(int meters) {
+    double walkingSpeed = 1.4; // meters per second
+    int totalSeconds = static_cast<int>(std::ceil(meters / walkingSpeed));
     
-    return i;
+    int minutes = totalSeconds / 60;
+    int seconds = totalSeconds % 60;
+
+    std::ostringstream oss;
+    oss << std::setw(2) << std::setfill('0') << minutes << ":"
+        << std::setw(2) << std::setfill('0') << seconds;
+    return oss.str();
 }

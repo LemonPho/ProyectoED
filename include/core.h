@@ -20,8 +20,8 @@ public:
     ~Core();
     void Map();
     std::string m_ErrorMessages;
-    int busquedaBinaria(int arr[], int n, int valor)
+    int busquedaBinaria(int arr[], int n, int valor);
     void ordenar(int[],int,int);
     int partir(int[],int,int);
-
+    std::string metersToWalkingTime(int meters);
 };
