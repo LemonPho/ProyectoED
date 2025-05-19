@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <limits>
 #include "connection-list.h"
 
 const std::string BUILDINGS_FILE = "buildings.txt";
@@ -23,6 +24,7 @@ public:
 
     Node* GetNodeFromString(const std::string& nodeName);
     Node* GetNodeFromIndex(const int index);
+    int GetIndexFromNode(Node* node);
 
     // makes an array of connections of the shortest path between two nodes
     ConnectionList FindShortestPath(Node* originNode, Node* destinationNode);

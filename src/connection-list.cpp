@@ -7,6 +7,10 @@ ConnectionList::ConnectionList() {
     }
 }
 
+bool ConnectionList::IsEmpty() {
+    return m_AmountConnections == 0;
+}
+
 int ConnectionList::GetAmountConnections() {
     return m_AmountConnections;
 }
@@ -104,6 +108,48 @@ void ConnectionList::RemoveEmptySpaces(){
     }
 }
 
+Connection ConnectionList::PopSmallest() {
+    //no connections
+    if (m_AmountConnections == 0) return Connection();
+
+    //use first connection as the default
+    double minDistance = m_Connections[0].GetDistance();
+    size_t minIndex = 0;
+    
+    //find connection with smallest distance
+    for (size_t i = 1; i < m_AmountConnections; i++) {
+        if (m_Connections[i].GetDistance() < minDistance && !m_Connections[i].IsEmpty()) {
+            minDistance = m_Connections[i].GetDistance();
+            minIndex = i;
+        }
+    }
+
+    Connection result = m_Connections[minIndex]; //save copy of the connection to return
+    m_Connections[minIndex] = Connection(); //"erase" connection
+    RemoveEmptySpaces(); //removes fills the empty space by shifting array
+
+    return result;
+}
+
+void ConnectionList::UpdateDistance(Node* node, double newDistance) {
+    Connection newConnection;
+    bool found = false;
+
+    for (size_t i = 0; i < m_AmountConnections; i++) {
+        if (m_Connections[i].GetNode() == node) {
+            m_Connections[i].SetDistance(newDistance);
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        newConnection.SetNode(node);
+        newConnection.SetDistance(newDistance);
+        AddConnection(newConnection);
+    }
+}
+
 //prints the nearby buildings (limits to 5), and they are ordered by distance
 void ConnectionList::PrintNearby(){
     if(m_AmountConnections == 0) return;
@@ -129,6 +175,24 @@ void ConnectionList::PrintIndexed(){
     for(int i=0; i < m_AmountConnections; i++){
         std::cout << i+1 << ". " << m_Connections[i].GetNode()->GetName() << std::endl;
     }
+}
+
+void ConnectionList::PrintPath() {
+    if (IsEmpty()) {
+        std::cout << "No se encontro un camino";
+        return;
+    }
+
+    double totalDistance = 0;
+    std::string timeWalked;
+
+    for (int i = m_AmountConnections - 1; i >= 0; i--) {
+        std::cout << m_Connections[i].GetNode()->GetName() << ": " << m_Connections[i].GetDistance() << "m" << std::endl;
+        totalDistance += m_Connections[i].GetDistance();
+    }
+
+    timeWalked = util::MetersToWalkingTime(totalDistance);
+    std::cout << "Distancia total: " << totalDistance << "m, tiempo de caminata aprox (mm:ss): " << timeWalked << std::endl;
 }
 
 void ConnectionList::WriteToDisk(std::ofstream &file, const std::string& originName) {

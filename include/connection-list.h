@@ -4,7 +4,7 @@
 #include "connection.h"
 #include "util.h"
 
-const int MAX_CONNECTIONS = 10;
+const int MAX_CONNECTIONS = 20;
 
 class ConnectionList{
 private:
@@ -12,6 +12,8 @@ private:
     Connection m_Connections[MAX_CONNECTIONS];
 public:
     ConnectionList();
+
+    bool IsEmpty();
 
     //get
     int GetAmountConnections();
@@ -26,11 +28,14 @@ public:
     void DeleteConnectionIndex(int index);
     void DeleteConnectionNode(Node* node);
     void RemoveEmptySpaces();
+    Connection PopSmallest();
+    void UpdateDistance(Node* node, double newDistance);
 
     //print
     void PrintNearby();
     void Print();
     void PrintIndexed();
+    void PrintPath();
 
     //disk
     void WriteToDisk(std::ofstream& file, const std::string &originName); //sending by reference to avoid stream issues

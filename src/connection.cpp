@@ -18,6 +18,10 @@ Connection::Connection(Node* node, double distance) {
     m_Distance = distance;
 }
 
+bool Connection::IsEmpty() {
+    return m_Node == nullptr;
+}
+
 void Connection::SetNode(Node* node) {
     m_Node = node;
 }

@@ -69,12 +69,90 @@ Node *Graph::GetNodeFromIndex(const int index) {
     return temp;
 }
 
-//TODO
+int Graph::GetIndexFromNode(Node* node) {
+    Node* temp = m_Header;
+    int i = 1;
+    while (temp != node) {
+        temp = temp->GetNext();
+        i++;
+    }
+
+    //node not found
+    if (temp == nullptr) {
+        return -1;
+    } else {
+        return i;
+    }
+}
+
+//Dijkstra method
 ConnectionList Graph::FindShortestPath(Node* originNode, Node* destinationNode) {
     //destination node or origin node is not connected in any way to the other nodes
     if(destinationNode->GetConnectionList().GetAmountConnections() == 0 || originNode->GetConnectionList().GetAmountConnections() == 0) return ConnectionList();
 
-    return ConnectionList();
+    int nodeCount = NodeCount();
+    double* distances = new double[nodeCount]; //dynamic array to initialize the amount of elements with a function call
+    Node** previous = new Node*[nodeCount]; //array of pointer pointers
+    //fill with empty values
+    for (int i = 0; i < nodeCount; i++) {
+        distances[i] = std::numeric_limits<double>::infinity(); //infinity
+        previous[i] = nullptr;
+    }
+    distances[GetIndexFromNode(originNode)] = 0.0;
+
+    Connection auxConnection;
+    ConnectionList queue;
+
+    auxConnection.SetNode(originNode);
+    auxConnection.SetDistance(0.0);
+    queue.AddConnection(auxConnection);
+
+    while (!queue.IsEmpty()) {
+        auxConnection = queue.PopSmallest(); //pop the connection with the smallest distance
+        Node* node = auxConnection.GetNode();
+        ConnectionList nodeConnections = node->GetConnectionList();
+        int nodeIndex = GetIndexFromNode(node);
+
+        if (node == destinationNode) break;
+
+        for (size_t i = 0; i < nodeConnections.GetAmountConnections(); i++) {
+            Connection edge = nodeConnections.GetConnection(i);
+            int edgeIndex = GetIndexFromNode(edge.GetNode());
+            double newDistance;
+            if (distances[edgeIndex] != std::numeric_limits<double>::infinity()) {
+                newDistance = distances[edgeIndex] + edge.GetDistance(); //get the distance plus the connection distance (building how far it is)
+            } else {
+                newDistance = edge.GetDistance();
+            }
+            
+            if (newDistance < distances[edgeIndex]) {
+                distances[edgeIndex] = newDistance;
+                previous[edgeIndex] = node;
+                queue.UpdateDistance(edge.GetNode(), newDistance);
+            }
+        }
+    }
+
+    ConnectionList path;
+    //at this point, the goal has been found, just need to reconstruct the path
+    int goalIndex = GetIndexFromNode(destinationNode);
+
+    //no path was found
+    if (distances[goalIndex] != std::numeric_limits<double>::infinity()) {
+        Node* current = destinationNode;
+        while (current != nullptr) {
+            auxConnection.SetNode(current);
+            auxConnection.SetDistance(distances[GetIndexFromNode(current)]);
+            path.AddConnection(auxConnection);
+            current = previous[GetIndexFromNode(current)];
+        }
+    }
+
+    //remove from memory
+    delete[] distances;
+    delete[] previous;
+
+    return path;
 }
 
 

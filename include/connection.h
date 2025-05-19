@@ -12,6 +12,8 @@ public:
     Connection();
     Connection(Node* node, double distance);
 
+    bool IsEmpty();
+
     void SetNode(Node* node);
     void SetDistance(double distance);
 
