@@ -17,7 +17,7 @@ void Core::Run(){
     
     do{
         system(CLEAR);
-        std::cout << "Mapa CUCEI" << std::endl;
+        std::cout << "CUCEI MAPS" << std::endl;
         Map();
         m_Graph->PrintErrorMessages();
         m_Graph->PrintList();
@@ -70,4 +70,49 @@ void Core::Map() {
         std::cout << linea << std::endl;
     }
     mapaFile.close();
+}
+int busquedaBinaria(int arr[], int n, int valor) {
+    int inicio = 0, fin = n - 1;
+    while (inicio <= fin) {
+        int medio = (inicio + fin) / 2;
+        if (arr[medio] == valor)
+            return medio;
+        else if (arr[medio] < valor)
+            inicio = medio + 1;
+        else
+            fin = medio - 1;
+    }
+    return -1;
+}
+
+void QuickSort::ordenar(int arreglo[],int start,int end){
+    if (end <= start) {
+        return ;
+    }
+    int pivot=partir(arreglo, start, end);
+    ordenar(arreglo, start, pivot-1);
+    ordenar(arreglo, pivot+1, end);
+    
+}
+int QuickSort::partir(int arreglo[], int start, int end){
+
+    int pivot=arreglo[end];
+    int i=start-1, aux=0;
+    
+    for (int j=start; j < end; j++) {
+        if(arreglo[j]<=pivot){
+            i++;
+            aux= arreglo[i];
+            arreglo[i]=arreglo[j];
+            arreglo[j]=aux;
+            est++;
+        }
+    }
+    i++;
+    aux= arreglo[i];
+    arreglo[i]=arreglo[end];
+    arreglo[end]=aux;
+    est++;
+    
+    return i;
 }
