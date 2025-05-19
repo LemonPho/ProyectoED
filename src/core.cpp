@@ -2,6 +2,8 @@
 #include "nodemenu.h"
 #include "graph.h"
 #include "graph-admin-menu.h"
+#include <iomanip> 
+#include <sstream>
 
 Core::Core() {
     m_Graph = new Graph();
