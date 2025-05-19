@@ -1,0 +1,20 @@
+          [TREN]<-------->[ENTRADA CDU]
+             |                   |
+             v                   v
+[ENTRADA REVOLUCIÓN]       [COLISEO]<----->[EST. CDU]     
+       |                        |              |
+       v                        v              |
+-->[TITANIC]                  [GYM]<-----------┤
+      |                                        |
+      v                                        |     
+--->[FLOR]                                     |    
+      |                                        |
+      v                                        |
+---->[Q]<------┐                               |
+             [JOBS]----------┐                 |
+[P]<-----------┘             |                 |
+                             |                 v
+                       [CDU-CUCEI]-------->[CAFE]<--->[CDU]            
+                             |                 |
+[DIV. CIENCIAS BASICAS]<-----┤                 |
+                   
