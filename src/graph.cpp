@@ -405,9 +405,7 @@ void Graph::showStepByStepPath(const ConnectionList& path) {
 
         std::cout << "Paso " << i + 1 << ": Ahora ve al edificio: ";
         current->PrintSimple();
-        std::cout << "Presiona ENTER para continuar...";
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cin.get();
+        util::EnterToContinue();
     }
 
     std::cout << "\n¡Has llegado a tu destino!\n";
