@@ -1,5 +1,5 @@
 #include "util.h"
-
+/*
 void util::EnterToContinue(){
     std::cout << "Presione enter para continuar..." << std::endl;
     ClearBuffer();
@@ -10,8 +10,16 @@ void util::EnterToContinue(){
 void util::ClearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
-}
+}*/
+void util::ClearBuffer() {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 
+void util::EnterToContinue() {
+    std::cout << "Presione ENTER para continuar...";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // limpia buffer
+    std::cin.get(); // espera ENTER
+}
 std::string util::MetersToWalkingTime(double meters) {
     double walkingSpeed = 1.4; // meters per second
     int totalSeconds = static_cast<int>(std::ceil(meters / walkingSpeed));

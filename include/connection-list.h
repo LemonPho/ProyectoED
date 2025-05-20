@@ -16,8 +16,8 @@ public:
     bool IsEmpty();
 
     //get
-    int GetAmountConnections();
-    Connection GetConnection(int index);
+    int GetAmountConnections() const;
+    Connection GetConnection(int index)const;
 
     //sorting
     void QuickSort(int start, int end);

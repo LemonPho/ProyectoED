@@ -253,6 +253,31 @@ void Graph::ReadFromDisk(){
         InsertNode(newNode);
     }
     buildings.close();
+    
+    std::ifstream regionsFile(BUILDINGS_REGION_FILE, std::ios::in);
+    if (regionsFile.is_open()) {
+        std::string regionLine;
+        while (std::getline(regionsFile, regionLine)) {
+            std::istringstream linestream(regionLine);
+            std::string name;
+            std::string regionStr;
+
+            std::getline(linestream, name, ',');
+            std::getline(linestream, regionStr);
+
+            Node* node = GetNodeFromString(name);
+            if (node) {
+                int region = std::stoi(regionStr);
+                node->SetRegion(region);
+            } else {
+                m_ErrorMessages += "No se encontró el edificio \"" + name + "\" al intentar asignar su región\n";
+            }
+        }
+        regionsFile.close();
+    } else {
+        m_ErrorMessages += "No se pudo abrir el archivo de regiones (buildingsRegion.csv)\n";
+    }
+
 
     //read from connections.txt
     Connection connection;
@@ -331,3 +356,123 @@ void Graph::WriteToDisk(){
     connections.close();
 }
 
+void Graph::displayMapForRegion(int regionId) {
+    std::string filename;
+    switch(regionId) {
+        case 1: filename = "mapNorthEast(1).txt"; break;
+        case 2: filename = "mapNorthWest(2).txt"; break;
+        case 3: filename = "mapSouthEast(3).txt"; break;
+        case 4: filename = "mapSouthWest(4).txt"; break;
+        default:
+            std::cout << "Región desconocida.\n";
+            return;
+    }
+
+    std::ifstream file("data/" + filename);
+    if (!file.is_open()) {
+        std::cout << "No se pudo abrir el archivo del mapa: data/" << filename << std::endl;
+        return;
+    }
+
+    std::cout << "\n=== Mapa de la región " << regionId << " ===\n\n";
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::cout << line << std::endl;
+    }
+    file.close();
+}
+
+#include <limits> // para std::numeric_limits
+
+void Graph::showStepByStepPath(const ConnectionList& path) {
+    if (path.GetAmountConnections() == 0) {
+        std::cout << "No se encontró un camino.\n";
+        return;
+    }
+
+    int previousRegion = -1;
+
+    for (int i = 0; i < path.GetAmountConnections(); ++i) {
+        Node* current = path.GetConnection(i).GetNode();
+        int currentRegion = current->GetRegion();
+
+        if (currentRegion != previousRegion) {
+            std::cout << "\nCambio de región detectado. Mostrando nuevo mapa...\n\n";
+            displayMapForRegion(currentRegion);
+            previousRegion = currentRegion;
+        }
+
+        std::cout << "Paso " << i + 1 << ": Ahora ve al edificio: ";
+        current->PrintSimple();
+        std::cout << "Presiona ENTER para continuar...";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();
+    }
+
+    std::cout << "\n¡Has llegado a tu destino!\n";
+}
+
+
+void Graph::LoadBuildingsWithRegions(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error al abrir el archivo: " << filename << std::endl;
+        return;
+    }
+
+    std::string line;
+    std::getline(file, line); // Saltar header
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string name, regionStr;
+
+        std::getline(ss, name, ',');
+        std::getline(ss, regionStr, ',');
+
+        if (name.empty() || regionStr.empty()) continue;
+
+        Node* node = FindNode(name);
+        if (!node) {
+            node = new Node(name);
+            AddNode(node);
+        }
+
+        try {
+            int region = std::stoi(regionStr);
+            node->SetRegion(region);
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Valor inválido para región en línea: " << line << std::endl;
+        }
+    }
+}
+
+void Graph::AddNode(Node* node) {
+    if (!m_Header) {
+        // Lista vacía: el nuevo nodo es la cabeza
+        m_Header = node;
+        node->SetNext(nullptr);
+        node->SetPrev(nullptr);
+    } else {
+        // Insertar al final de la lista
+        Node* current = m_Header;
+        while (current->GetNext() != nullptr) {
+            current = current->GetNext();
+        }
+        current->SetNext(node);
+        node->SetPrev(current);
+        node->SetNext(nullptr);
+    }
+}
+
+Node* Graph::FindNode(const std::string& name) {
+    Node* current = m_Header;
+    while (current != nullptr) {
+        if (current->GetName() == name) {
+            return current;
+        }
+        current = current->GetNext();
+    }
+    return nullptr;
+}

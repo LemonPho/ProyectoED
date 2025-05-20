@@ -9,6 +9,8 @@ Node::Node() {
 Node::~Node() {
 }
 
+Node::Node(const std::string& name) : m_Name(name) {}
+
 void Node::Create(Graph *graph){
     Node* searchNode = new Node(); //Node used for making sure the name is unique
     std::string tempName;

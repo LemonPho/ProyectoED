@@ -11,13 +11,14 @@ private:
     std::string m_Name; // each "building" has to have a unique name
 
     ConnectionList m_ConnectionList;
-    
+    int m_RegionID = 0;
     Node* m_Next;
     Node* m_Prev;
 public:
     Node();
     ~Node();
-
+    Node(const std::string& name);
+    
     void Create(Graph* graph);
 
     void AddConnection(Graph* graph);
@@ -44,5 +45,9 @@ public:
     Node& operator=(const Node& other);
     bool operator==(const Node& other) const;
     bool operator!=(const Node& other) const;
+    
+    void SetRegion(int region) { m_RegionID = region; }
+    int GetRegion() const { return m_RegionID; }
+
 
 };

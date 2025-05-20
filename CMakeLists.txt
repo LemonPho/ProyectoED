@@ -8,6 +8,8 @@ include_directories(include)
 
 # Collect source and header files
 file(GLOB_RECURSE SOURCES "src/*.cpp")
+list(APPEND SOURCES src/util.cpp)  
+
 file(GLOB_RECURSE HEADERS "include/*.h")
 
 # Define the executable target

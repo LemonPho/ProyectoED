@@ -11,11 +11,11 @@ bool ConnectionList::IsEmpty() {
     return m_AmountConnections == 0;
 }
 
-int ConnectionList::GetAmountConnections() {
+int ConnectionList::GetAmountConnections()const {
     return m_AmountConnections;
 }
 
-Connection ConnectionList::GetConnection(int index) {
+Connection ConnectionList::GetConnection(int index)const {
     //out of bounds
     if(index < 0 || index >= m_AmountConnections) return Connection();
 
@@ -189,7 +189,7 @@ void ConnectionList::PrintPath() {
     }
 
     timeWalked = util::MetersToWalkingTime(m_Connections[m_AmountConnections-1].GetDistance());
-    std::cout << "Distancia total: " << m_Connections[m_AmountConnections-1].GetDistance() << "m, tiempo de caminata aprox (mm:ss): " << timeWalked << std::endl;
+    std::cout << "Distancia total: " << m_Connections[m_AmountConnections-1].GetDistance() << "m. Tiempo de caminata aproximada: " << timeWalked << std::endl;
 }
 
 
