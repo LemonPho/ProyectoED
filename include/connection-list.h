@@ -30,6 +30,8 @@ public:
     void RemoveEmptySpaces();
     Connection PopSmallest();
     void UpdateDistance(Node* node, double newDistance);
+    void Reverse();
+
 
     //print
     void PrintNearby();

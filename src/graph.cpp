@@ -25,19 +25,27 @@ void Graph::InsertNode(Node* newNode){
 void Graph::DeleteNode(int index){
     Node* deleteNode = GetNodeFromIndex(index);
 
-    //assign pointers to omit the node to be deleted
-    if (deleteNode == m_Header) { //node is the header
-        m_Header = m_Header->GetNext();
-    } else if (deleteNode->GetNext()) { //node is in the middle of the pack
-        deleteNode->GetNext()->SetPrev(deleteNode->GetPrev());
-        deleteNode->GetPrev()->SetNext(deleteNode->GetNext());
-    } else if (!deleteNode->GetNext()) { //node is the last element in the list
-        deleteNode->GetPrev()->SetNext(nullptr);
+    if (!deleteNode) {
+        m_ErrorMessages += "No se encontró ningún nodo con ese índice.\n";
+        return;
     }
 
-    std::cout << "Omitted node" << std::endl;
+    // Reasignar punteros
+    if (deleteNode == m_Header) {
+        m_Header = m_Header->GetNext();
+        if (m_Header) {
+            m_Header->SetPrev(nullptr);
+        }
+    } else {
+        if (deleteNode->GetPrev()) {
+            deleteNode->GetPrev()->SetNext(deleteNode->GetNext());
+        }
+        if (deleteNode->GetNext()) {
+            deleteNode->GetNext()->SetPrev(deleteNode->GetPrev());
+        }
+    }
 
-    //clean up connections (remove connections to the node)
+    // Eliminar conexiones desde otros nodos hacia este
     Node* temp = m_Header;
     while (temp) {
         temp->DeleteConnectionNode(deleteNode);
@@ -45,9 +53,8 @@ void Graph::DeleteNode(int index){
     }
 
     delete deleteNode;
-
-    
 }
+
 
 Node* Graph::GetNodeFromString(const std::string& nodeName) {
     Node* temp = m_Header;
@@ -87,73 +94,67 @@ int Graph::GetIndexFromNode(Node* node) {
 
 //Dijkstra method
 ConnectionList Graph::FindShortestPath(Node* originNode, Node* destinationNode) {
-    //destination node or origin node is not connected in any way to the other nodes
-    if(destinationNode->GetConnectionList().GetAmountConnections() == 0 || originNode->GetConnectionList().GetAmountConnections() == 0) return ConnectionList();
+    if (!originNode || !destinationNode) return ConnectionList();
 
     int nodeCount = NodeCount();
-    double* distances = new double[nodeCount]; //dynamic array to initialize the amount of elements with a function call
-    Node** previous = new Node*[nodeCount]; //array of pointer pointers
-    //fill with empty values
-    for (int i = 0; i < nodeCount; i++) {
-        distances[i] = std::numeric_limits<double>::infinity(); //infinity
+    double* distances = new double[nodeCount];
+    Node** previous = new Node*[nodeCount];
+
+    for (int i = 0; i < nodeCount; ++i) {
+        distances[i] = std::numeric_limits<double>::infinity();
         previous[i] = nullptr;
     }
-    distances[GetIndexFromNode(originNode)] = 0.0;
 
-    Connection auxConnection;
+    int originIndex = GetIndexFromNode(originNode);
+    if (originIndex == -1) return ConnectionList();
+
+    distances[originIndex] = 0.0;
+
     ConnectionList queue;
-
-    auxConnection.SetNode(originNode);
-    auxConnection.SetDistance(0.0);
-    queue.AddConnection(auxConnection);
+    queue.AddConnection(Connection(originNode, 0.0));
 
     while (!queue.IsEmpty()) {
-        auxConnection = queue.PopSmallest(); //pop the connection with the smallest distance
-        Node* node = auxConnection.GetNode();
-        ConnectionList nodeConnections = node->GetConnectionList();
-        int nodeIndex = GetIndexFromNode(node);
+        Connection current = queue.PopSmallest();
+        Node* currentNode = current.GetNode();
+        int currentIndex = GetIndexFromNode(currentNode);
 
-        if (node == destinationNode) break;
+        if (currentNode == destinationNode) break;
 
-        for (size_t i = 0; i < nodeConnections.GetAmountConnections(); i++) {
-            Connection edge = nodeConnections.GetConnection(i);
-            int edgeIndex = GetIndexFromNode(edge.GetNode());
-            double newDistance;
-            if (distances[edgeIndex] != std::numeric_limits<double>::infinity()) {
-                newDistance = distances[edgeIndex] + edge.GetDistance(); //get the distance plus the connection distance (building how far it is)
-            } else {
-                newDistance = edge.GetDistance();
-            }
-            
-            if (newDistance < distances[edgeIndex]) {
-                distances[edgeIndex] = newDistance;
-                previous[edgeIndex] = node;
-                queue.UpdateDistance(edge.GetNode(), newDistance);
+        ConnectionList neighbors = currentNode->GetConnectionList();
+        for (int i = 0; i < neighbors.GetAmountConnections(); ++i) {
+            Connection edge = neighbors.GetConnection(i);
+            Node* neighbor = edge.GetNode();
+            int neighborIndex = GetIndexFromNode(neighbor);
+            if (neighborIndex == -1) continue;
+
+            double alt = distances[currentIndex] + edge.GetDistance();
+            if (alt < distances[neighborIndex]) {
+                distances[neighborIndex] = alt;
+                previous[neighborIndex] = currentNode;
+                queue.UpdateDistance(neighbor, alt);
             }
         }
     }
 
     ConnectionList path;
-    //at this point, the goal has been found, just need to reconstruct the path
-    int goalIndex = GetIndexFromNode(destinationNode);
-
-    //no path was found
-    if (distances[goalIndex] != std::numeric_limits<double>::infinity()) {
+    int destIndex = GetIndexFromNode(destinationNode);
+    if (distances[destIndex] != std::numeric_limits<double>::infinity()) {
         Node* current = destinationNode;
-        while (current != nullptr) {
-            auxConnection.SetNode(current);
-            auxConnection.SetDistance(distances[GetIndexFromNode(current)]);
-            path.AddConnection(auxConnection);
-            current = previous[GetIndexFromNode(current)];
+        while (current) {
+            int idx = GetIndexFromNode(current);
+            if (idx == -1) break;
+            path.AddConnection(Connection(current, distances[idx]));
+            current = previous[idx];
         }
+
+        path.Reverse();  //
     }
 
-    //remove from memory
     delete[] distances;
     delete[] previous;
-
     return path;
 }
+
 
 
 void Graph::PrintGraph(){
@@ -329,3 +330,4 @@ void Graph::WriteToDisk(){
     util::EnterToContinue();
     connections.close();
 }
+

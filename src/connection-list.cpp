@@ -36,21 +36,17 @@ int ConnectionList::Partition(int start, int end){
     Connection temp;
     int i = start - 1;
 
-    for(int j=start; j <= end; j++){
+    for(int j=start; j < end; j++){  // CORREGIDO: j < end
         if(m_Connections[j] < pivot){
             i++;
-            temp = m_Connections[j];
-            m_Connections[j] = m_Connections[i];
-            m_Connections[i] = temp;
+            std::swap(m_Connections[i], m_Connections[j]);
         }
     }
 
-    temp = m_Connections[i+1];
-    m_Connections[i+1] = m_Connections[end];
-    m_Connections[end] = temp;
-
+    std::swap(m_Connections[i+1], m_Connections[end]); // mueve pivote a su lugar
     return i+1;
 }
+
 
 void ConnectionList::AddConnection(Connection connection) {
     if(m_AmountConnections == MAX_CONNECTIONS){
@@ -87,26 +83,19 @@ void ConnectionList::DeleteConnectionNode(Node* node) {
 //function used after deleting elements from the array, this shifts the elements ahead to fill the empty spaces
 //it is necessary to run after using any of the delete functions, because they dont decrement the amountConnections variable
 void ConnectionList::RemoveEmptySpaces(){
-    //if we dont do this the for never runs so the decrement never happens
-    if (m_AmountConnections == 1) {
-        m_AmountConnections--;
-        return;
-    }
-
-    Connection emptyConnection = Connection();
-    for(int i=0; i < m_AmountConnections-1; i++){
-        //connection is either a deleted node or just empty
-        if(m_Connections[i] == emptyConnection){
-            //shift all the connections ahead one spot behind
-            for(size_t j=i+1; j < m_AmountConnections; j++){
-                m_Connections[j-1] = m_Connections[j];
-                m_Connections[j] = Connection();
+    int j = 0;
+    for (int i = 0; i < m_AmountConnections; ++i) {
+        if (!m_Connections[i].IsEmpty()) {
+            if (i != j) {
+                m_Connections[j] = m_Connections[i];
+                m_Connections[i] = Connection(); // limpia posición anterior
             }
-            m_AmountConnections--;
-            i--;
+            j++;
         }
     }
+    m_AmountConnections = j;
 }
+
 
 Connection ConnectionList::PopSmallest() {
     //no connections
@@ -151,20 +140,27 @@ void ConnectionList::UpdateDistance(Node* node, double newDistance) {
 }
 
 //prints the nearby buildings (limits to 5), and they are ordered by distance
-void ConnectionList::PrintNearby(){
+vvoid ConnectionList::PrintNearby(){
+    RemoveEmptySpaces();  // asegúrate de que solo haya conexiones válidas
     if(m_AmountConnections == 0) return;
+    QuickSort(0, m_AmountConnections - 1);
 
-    int limit = (m_AmountConnections > 5) ? 5 : m_AmountConnections;
-
-    for(int i=0; i < limit; i++){
-        std::cout << m_Connections[i].GetNode()->GetName() << "(" << m_Connections[i].GetDistance() << "m)" << std::endl;
+    int limit = std::min(5, m_AmountConnections);
+    for(int i = 0; i < limit; i++){
+        std::cout << m_Connections[i].GetNode()->GetName() << " (" << m_Connections[i].GetDistance() << "m)" << std::endl;
     }
     std::cout << std::endl;
 }
 
-//prints all the connections, also ordered
+
 void ConnectionList::Print() {
-    if(m_AmountConnections == 0) std::cout << " (sin conexiones)";
+    if(m_AmountConnections == 0) {
+        std::cout << " (sin conexiones)";
+        return;
+    }
+
+    QuickSort(0, m_AmountConnections - 1);  // ORDENAR ANTES DE IMPRIMIR
+
     for(int i=0; i < m_AmountConnections; i++){
         std::cout << "-> " << m_Connections[i].GetNode()->GetName() << "(" << m_Connections[i].GetDistance() << "m)";
     }
@@ -186,7 +182,7 @@ void ConnectionList::PrintPath() {
     double totalDistance = 0;
     std::string timeWalked;
 
-    for (int i = m_AmountConnections - 1; i >= 0; i--) {
+    for (int i = 0; i < m_AmountConnections; i++) {
         std::cout << m_Connections[i].GetNode()->GetName() << ": " << m_Connections[i].GetDistance() << "m" << std::endl;
         totalDistance += m_Connections[i].GetDistance();
     }
@@ -195,11 +191,20 @@ void ConnectionList::PrintPath() {
     std::cout << "Distancia total: " << totalDistance << "m, tiempo de caminata aprox (mm:ss): " << timeWalked << std::endl;
 }
 
+
 void ConnectionList::WriteToDisk(std::ofstream &file, const std::string& originName) {
     if (!file.is_open()) return;
 
     std::cout << originName << std::endl;
     for (size_t i = 0; i < m_AmountConnections; i++) {
         m_Connections[i].WriteToDisk(file, originName);
+    }
+}
+
+void ConnectionList::Reverse() {
+    for (int i = 0; i < m_AmountConnections / 2; ++i) {
+        Connection temp = m_Connections[i];
+        m_Connections[i] = m_Connections[m_AmountConnections - 1 - i];
+        m_Connections[m_AmountConnections - 1 - i] = temp;
     }
 }
