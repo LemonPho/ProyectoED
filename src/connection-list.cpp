@@ -140,7 +140,7 @@ void ConnectionList::UpdateDistance(Node* node, double newDistance) {
 }
 
 //prints the nearby buildings (limits to 5), and they are ordered by distance
-vvoid ConnectionList::PrintNearby(){
+void ConnectionList::PrintNearby(){
     RemoveEmptySpaces();  // asegúrate de que solo haya conexiones válidas
     if(m_AmountConnections == 0) return;
     QuickSort(0, m_AmountConnections - 1);
@@ -182,13 +182,14 @@ void ConnectionList::PrintPath() {
     double totalDistance = 0;
     std::string timeWalked;
 
+    std::cout << "DIRECCIONES DE: " << m_Connections[0].GetNode() -> GetName() << " -> " << m_Connections[m_AmountConnections-1].GetNode()->GetName() << std::endl;
+
     for (int i = 0; i < m_AmountConnections; i++) {
         std::cout << m_Connections[i].GetNode()->GetName() << ": " << m_Connections[i].GetDistance() << "m" << std::endl;
-        totalDistance += m_Connections[i].GetDistance();
     }
 
-    timeWalked = util::MetersToWalkingTime(totalDistance);
-    std::cout << "Distancia total: " << totalDistance << "m, tiempo de caminata aprox (mm:ss): " << timeWalked << std::endl;
+    timeWalked = util::MetersToWalkingTime(m_Connections[m_AmountConnections-1].GetDistance());
+    std::cout << "Distancia total: " << m_Connections[m_AmountConnections-1].GetDistance() << "m, tiempo de caminata aprox (mm:ss): " << timeWalked << std::endl;
 }
 
 

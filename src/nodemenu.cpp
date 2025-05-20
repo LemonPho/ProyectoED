@@ -47,6 +47,7 @@ void NodeMenu::Run() {
 
                 // array of connections to save the path from origin node (m_Node) to destinationNode
                 ConnectionList path = m_Graph->FindShortestPath(m_Node, destinationNode);
+                system(CLEAR);
                 path.PrintPath();
                 util::EnterToContinue();
                 break;
